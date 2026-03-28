@@ -7,27 +7,25 @@ import { Sun, Moon, Menu, X } from 'lucide-react'
 
 export function Header() {
   const pathname = usePathname()
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem('theme') as 'light' | 'dark' | null
-    if (stored) {
-      setTheme(stored)
-      document.documentElement.setAttribute('data-theme', stored)
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setTheme(prefersDark ? 'dark' : 'light')
-      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light')
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40)
     }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const toggleTheme = () => {
-    const next = theme === 'light' ? 'dark' : 'light'
-    setTheme(next)
-    document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('theme', next)
-  }
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
 
   const navLinks = [
     { href: '/services', label: 'Leistungen' },
@@ -37,10 +35,10 @@ export function Header() {
 
   return (
     <>
-      <header className="site-header">
+      <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="container">
           <div className="nav-inner">
-            <Link href="/" className="nav-logo">
+            <Link href="/" className="logo">
               devmiro.at
             </Link>
 
@@ -49,7 +47,10 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`nav-link ${pathname === link.href ? 'active' : ''}`}
+                  className={pathname === link.href ? 'active' : ''}
+                  style={{
+                    color: pathname === link.href ? 'var(--accent)' : undefined,
+                  }}
                 >
                   {link.label}
                 </Link>
@@ -57,15 +58,7 @@ export function Header() {
             </nav>
 
             <div className="nav-actions">
-              <button
-                onClick={toggleTheme}
-                className="theme-toggle"
-                aria-label="Design wechseln"
-              >
-                {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
-              </button>
-
-              <Link href="/kontakt" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '0.5rem 1.1rem' }}>
+              <Link href="/kontakt" className="btn btn-primary">
                 Projekt starten
               </Link>
 
@@ -74,7 +67,7 @@ export function Header() {
                 onClick={() => setMenuOpen(true)}
                 aria-label="Menü öffnen"
               >
-                <Menu size={18} />
+                <Menu size={20} />
               </button>
             </div>
           </div>
@@ -82,36 +75,47 @@ export function Header() {
       </header>
 
       {/* Mobile nav */}
-      <div className={`mobile-nav ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
+      <div
+        className={`mobile-nav ${menuOpen ? 'open' : ''}`}
+        aria-hidden={!menuOpen}
+        role="dialog"
+        aria-modal="true"
+      >
         <div className="mobile-nav-header">
-          <Link href="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
+          <Link
+            href="/"
+            className="logo"
+            onClick={() => setMenuOpen(false)}
+          >
             devmiro.at
           </Link>
           <button
             onClick={() => setMenuOpen(false)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)' }}
+            style={{ background: 'none', border: 'none', cursor: 'none', color: 'var(--text-primary)' }}
             aria-label="Menü schließen"
           >
             <X size={24} />
           </button>
         </div>
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            onClick={() => setMenuOpen(false)}
-          >
-            {link.label}
-          </Link>
-        ))}
-        <div style={{ marginTop: 'auto', paddingTop: '1.5rem' }}>
+        <div className="mobile-nav-links">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+        <div style={{ marginTop: 'auto', paddingTop: '2rem' }}>
           <Link
             href="/kontakt"
             className="btn btn-primary btn-lg"
             style={{ width: '100%', justifyContent: 'center' }}
             onClick={() => setMenuOpen(false)}
           >
-            Projekt starten
+            Projekt starten →
           </Link>
         </div>
       </div>
