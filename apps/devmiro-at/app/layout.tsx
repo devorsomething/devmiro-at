@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Bebas_Neue, Outfit, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -9,9 +9,9 @@ const bebasNeue = Bebas_Neue({
   display: 'swap',
 })
 
-const spaceGrotesk = Space_Grotesk({
+const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-space',
+  variable: '--font-outfit',
   display: 'swap',
 })
 
@@ -109,7 +109,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${bebasNeue.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+      <body className={`${bebasNeue.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
         {/* Noise overlay */}
         <div className="noise-overlay" aria-hidden="true" />
         {/* Custom cursor */}
@@ -131,25 +131,27 @@ function CursorScript() {
             var cursor = document.getElementById('cursor');
             var cursorDot = document.getElementById('cursor-dot');
             if (!cursor || !cursorDot) return;
+            if ('ontouchstart' in window) {
+              cursor.style.display = 'none';
+              cursorDot.style.display = 'none';
+              return;
+            }
 
             var pos = { x: -100, y: -100 };
             var dotPos = { x: -100, y: -100 };
-            var trail = [];
 
             document.addEventListener('mousemove', function(e) {
               pos.x = e.clientX;
               pos.y = e.clientY;
             });
 
-            // Build trail elements
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 4; i++) {
               var t = document.createElement('div');
               t.className = 'cursor-trail';
-              t.style.opacity = (0.3 - i * 0.05).toString();
-              t.style.width = (8 - i).toString() + 'px';
-              t.style.height = (8 - i).toString() + 'px';
+              t.style.opacity = (0.25 - i * 0.05).toString();
+              t.style.width = (6 - i) + 'px';
+              t.style.height = (6 - i) + 'px';
               document.body.appendChild(t);
-              trail.push({ el: t, x: -100, y: -100 });
             }
 
             function animate() {
@@ -159,90 +161,35 @@ function CursorScript() {
               cursor.style.top = pos.y + 'px';
               cursorDot.style.left = dotPos.x + 'px';
               cursorDot.style.top = dotPos.y + 'px';
-
-              var prevX = dotPos.x;
-              var prevY = dotPos.y;
-              for (var i = 0; i < trail.length; i++) {
-                var t = trail[i];
-                t.x += (prevX - t.x) * 0.3;
-                t.y += (prevY - t.y) * 0.3;
-                t.el.style.left = t.x + 'px';
-                t.el.style.top = t.y + 'px';
-                t.el.style.opacity = ((0.3 - i * 0.05) * 0.5).toString();
-                prevX = t.x;
-                prevY = t.y;
-              }
-
               requestAnimationFrame(animate);
             }
             animate();
 
-            // Hover state
             var hoverEls = document.querySelectorAll('a, button, [role="button"]');
             hoverEls.forEach(function(el) {
               el.addEventListener('mouseenter', function() { cursor.classList.add('hovering'); });
               el.addEventListener('mouseleave', function() { cursor.classList.remove('hovering'); });
             });
-
-            // Hide on mobile
-            if ('ontouchstart' in window) {
-              cursor.style.display = 'none';
-              cursorDot.style.display = 'none';
-              trail.forEach(function(t) { t.el.style.display = 'none'; });
-            }
           })();
 
-          // Scroll reveal
+          // FAQ accordion
           (function() {
-            var reveals = document.querySelectorAll('.reveal');
-            if (!reveals.length) return;
-
-            var observer = new IntersectionObserver(function(entries) {
-              entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add('visible');
-                  observer.unobserve(entry.target);
+            var questions = document.querySelectorAll('.faq-question-v2');
+            questions.forEach(function(btn) {
+              btn.addEventListener('click', function() {
+                var answer = btn.nextElementSibling;
+                var isOpen = btn.classList.contains('open');
+                questions.forEach(function(q) {
+                  q.classList.remove('open');
+                  var a = q.nextElementSibling;
+                  if (a) a.classList.remove('open');
+                });
+                if (!isOpen) {
+                  btn.classList.add('open');
+                  answer.classList.add('open');
                 }
               });
-            }, { threshold: 0.1 });
-
-            reveals.forEach(function(el) { observer.observe(el); });
-          })();
-
-          // Counter animation
-          (function() {
-            var counters = document.querySelectorAll('[data-count]');
-            if (!counters.length) return;
-
-            var observer = new IntersectionObserver(function(entries) {
-              entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                  var el = entry.target;
-                  var target = parseFloat(el.getAttribute('data-count'));
-                  var suffix = el.getAttribute('data-suffix') || '';
-                  var prefix = el.getAttribute('data-prefix') || '';
-                  var duration = 1500;
-                  var start = performance.now();
-
-                  function update(now) {
-                    var elapsed = now - start;
-                    var progress = Math.min(elapsed / duration, 1);
-                    var eased = 1 - Math.pow(1 - progress, 3);
-                    var current = target * eased;
-                    if (Number.isInteger(target)) {
-                      el.textContent = prefix + Math.floor(current) + suffix;
-                    } else {
-                      el.textContent = prefix + current.toFixed(1) + suffix;
-                    }
-                    if (progress < 1) requestAnimationFrame(update);
-                  }
-                  requestAnimationFrame(update);
-                  observer.unobserve(el);
-                }
-              });
-            }, { threshold: 0.5 });
-
-            counters.forEach(function(el) { observer.observe(el); });
+            });
           })();
         `,
       }}
