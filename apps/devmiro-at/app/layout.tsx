@@ -1,25 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Instrument_Serif } from 'next/font/google'
 import './globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-})
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  variable: '--font-instrument-serif',
-  weight: '400',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://devmiro.at'),
@@ -101,8 +81,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="de" className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
+    <html lang="de">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..400&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <script
           type="application/ld+json"
