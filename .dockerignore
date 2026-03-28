@@ -4,4 +4,3 @@ node_modules
 .env*
 *.log
 README.md
-package-lock.json
