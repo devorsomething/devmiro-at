@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono, Instrument_Serif } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -14,11 +14,31 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  variable: '--font-instrument-serif',
+  weight: '400',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://devmiro.at'),
-  title: 'DevMiro — Developer & Automation Architect | Vorarlberg, Österreich',
-  description: 'Ich baue Systeme, die mitdenken — n8n Workflows, KI-Agenten und Web-Apps, die Ihr Business skalieren. Automatisierung, Web-Entwicklung und Shopify aus Vorarlberg.',
-  keywords: ['Automatisierung', 'n8n', 'Workflow', 'KI', 'Chatbot', 'Next.js', 'Shopify', 'Web-Entwicklung', 'Vorarlberg', 'Österreich', 'Business Automation'],
+  title: {
+    default: 'DevMiro — IT-Lösungen für Vorarlberg KMUs',
+    template: '%s | DevMiro',
+  },
+  description:
+    'Professionelle Websites, KI-Chatbots und Business-Automatisierung für Unternehmen in Bregenz und Vorarlberg. Mehr Umsatz durch digitale Lösungen.',
+  keywords: [
+    'Website Bregenz',
+    'Webentwicklung Vorarlberg',
+    'KI Chatbot Österreich',
+    'Business Automation',
+    'Next.js',
+    'Shopify',
+    'SEO Vorarlberg',
+    'IT-Service Bregenz',
+  ],
   authors: [{ name: 'Miro Gavanelli' }],
   creator: 'Miro Gavanelli',
   openGraph: {
@@ -26,13 +46,14 @@ export const metadata: Metadata = {
     locale: 'de_AT',
     url: 'https://devmiro.at',
     siteName: 'DevMiro',
-    title: 'DevMiro — Developer & Automation Architect',
-    description: 'Ich baue Systeme, die mitdenken — n8n Workflows, KI-Agenten und Web-Apps, die Ihr Business skalieren.',
+    title: 'DevMiro — IT-Lösungen für Vorarlberg KMUs',
+    description:
+      'Professionelle Websites, KI-Chatbots und Business-Automatisierung für Unternehmen in Bregenz und Vorarlberg.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DevMiro — Developer & Automation Architect',
-    description: 'Ich baue Systeme, die mitdenken — n8n Workflows, KI-Agenten und Web-Apps.',
+    title: 'DevMiro — IT-Lösungen für Vorarlberg KMUs',
+    description: 'Professionelle Websites, KI-Chatbots und Business-Automatisierung.',
   },
   robots: {
     index: true,
@@ -44,47 +65,34 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Person',
-      '@id': 'https://devmiro.at/#person',
-      name: 'Miro Gavanelli',
-      jobTitle: 'Developer & Automation Architect',
-      url: 'https://devmiro.at',
-      sameAs: [
-        'https://linkedin.com/in/mirogavanelli',
-        'https://github.com/devmiro'
-      ],
-      knowsAbout: ['n8n', 'Next.js', 'KI-Automatisierung', 'Shopify', 'TypeScript', 'Node.js'],
-      areaServed: {
-        '@type': 'Place',
-        name: 'Vorarlberg, Österreich'
-      }
-    },
-    {
       '@type': 'LocalBusiness',
       '@id': 'https://devmiro.at/#business',
       name: 'DevMiro',
-      description: 'Developer & Automation Architect — Automatisierung, Web-Entwicklung und Shopify aus Vorarlberg.',
+      description:
+        'IT-Lösungen für KMUs in Vorarlberg — Websites, KI-Chatbots, Hosting und mehr.',
       url: 'https://devmiro.at',
-      telephone: '+43-660-0000000',
+      telephone: '+436641234567',
       email: 'info@devmiro.at',
       address: {
         '@type': 'PostalAddress',
         addressRegion: 'Vorarlberg',
-        addressCountry: 'AT'
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        addressRegion: 'Vorarlberg'
+        addressCountry: 'AT',
       },
       priceRange: '€€',
       openingHours: 'Mo-Fr 09:00-18:00',
       areaServed: {
         '@type': 'Place',
-        name: 'Vorarlberg, Österreich'
+        name: 'Vorarlberg, Österreich',
       },
-      serviceType: ['Workflow-Automatisierung', 'Web-Entwicklung', 'KI-Integration', 'Shopify Development']
-    }
-  ]
+      serviceType: [
+        'Webentwicklung',
+        'KI-Integration',
+        'SEO',
+        'Hosting',
+        'Social Media',
+      ],
+    },
+  ],
 }
 
 export default function RootLayout({
@@ -92,25 +100,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-
   return (
-    <html lang="de" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="de" className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {plausibleDomain && (
-          <script
-            defer
-            data-domain={plausibleDomain}
-            src="https://plausible.io/js/script.js"
-          />
-        )}
       </head>
-      <body className="min-h-screen bg-[var(--background)] text-[var(--text-primary)] antialiased">
+      <body className="min-h-screen antialiased">
         {children}
       </body>
     </html>

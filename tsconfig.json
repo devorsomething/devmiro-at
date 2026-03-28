@@ -23,5 +23,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "business-tools", "clients", "configs", "docs", "notes", "offers", "projects", "research", "secrets", "services", "skills", "uploads", "exports", "logs", "cron_logs", "cron_runs", "cron-runs", "memory"]
 }

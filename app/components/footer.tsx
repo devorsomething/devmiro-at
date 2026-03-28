@@ -1,68 +1,57 @@
-import { Github, Linkedin } from 'lucide-react'
+import Link from 'next/link'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-[var(--border)]">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Left: Logo + Tagline */}
-          <div className="text-center md:text-left">
-            <a href="#" className="inline-flex items-center gap-2">
-              <span className="text-xl font-bold text-[var(--text-primary)]">
-                Dev<span className="text-[var(--accent)]">Miro</span>
-              </span>
-            </a>
-            <p className="text-sm text-[var(--text-secondary)] mt-2">
-              Systeme, die mitdenken.
+    <footer className="site-footer">
+      <div className="container">
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Link href="/" className="footer-logo">
+              devmiro.at
+            </Link>
+            <p className="footer-tagline">
+              IT-Lösungen für Vorarlberg KMUs. Websites, KI-Chatbots und
+              Business-Automatisierung — alles aus einer Hand.
             </p>
           </div>
 
-          {/* Center: Nav Links */}
-          <nav className="flex items-center gap-6">
-            <a
-              href="#"
-              className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-            >
-              Impressum
-            </a>
-            <a
-              href="#"
-              className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-            >
-              Datenschutz
-            </a>
-          </nav>
+          <div>
+            <h4 className="footer-col-title">Leistungen</h4>
+            <div className="footer-links">
+              <Link href="/services" className="footer-link">Website Entwicklung</Link>
+              <Link href="/services" className="footer-link">KI-Chatbot</Link>
+              <Link href="/services" className="footer-link">Social Media</Link>
+              <Link href="/services" className="footer-link">SEO Optimierung</Link>
+              <Link href="/services" className="footer-link">Hosting & Wartung</Link>
+            </div>
+          </div>
 
-          {/* Right: Social Links */}
-          <div className="flex items-center gap-4">
-            <a
-              href="https://linkedin.com/in/mirogavanelli"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent)] transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="https://github.com/devmiro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent)] transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="w-5 h-5" />
-            </a>
+          <div>
+            <h4 className="footer-col-title">Unternehmen</h4>
+            <div className="footer-links">
+              <Link href="/about" className="footer-link">Über uns</Link>
+              <Link href="/kontakt" className="footer-link">Kontakt</Link>
+              <Link href="/impressum" className="footer-link">Impressum</Link>
+              <Link href="/datenschutz" className="footer-link">Datenschutz</Link>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="footer-col-title">Kontakt</h4>
+            <div className="footer-links">
+              <a href="mailto:info@devmiro.at" className="footer-link">info@devmiro.at</a>
+              <a href="tel:+436641234567" className="footer-link">+43 664 123 4567</a>
+              <span className="footer-link">Bregenz, Vorarlberg</span>
+              <span className="footer-link">Österreich</span>
+            </div>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-8 pt-8 border-t border-[var(--border)] text-center">
-          <p className="text-sm text-[var(--text-secondary)]">
-            © {currentYear} Miro Gavanelli. Alle Rechte vorbehalten. Inhaber: Einzelunternehmen, UID: AT00000000
-          </p>
+        <div className="footer-bottom">
+          <span>© {currentYear} DevMiro. Alle Rechte vorbehalten.</span>
+          <span>Made with ❤️ in Vorarlberg</span>
         </div>
       </div>
     </footer>
