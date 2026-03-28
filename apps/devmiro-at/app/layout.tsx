@@ -78,7 +78,6 @@ const jsonLd = {
         addressRegion: 'Vorarlberg',
         addressCountry: 'AT',
       },
-      priceRange: '€€',
       openingHours: 'Mo-Fr 09:00-18:00',
       areaServed: {
         '@type': 'Place',

@@ -62,7 +62,7 @@ const problems = [
     emoji: '🤷',
     number: '02',
     title: 'Keine Ahnung was eine Website kostet',
-    desc: 'Angebote schwanken von €500 bis €50.000. Sie haben keine Referenz, keine Vergleichbarkeit — und Angst, zu viel oder das Falsche zu zahlen.',
+    desc: 'Angebote schwanken von einigen hundert bis mehreren tausend. Sie haben keine Referenz, keine Vergleichbarkeit — und Angst, zu viel oder das Falsche zu zahlen.',
   },
   {
     emoji: '📈',
