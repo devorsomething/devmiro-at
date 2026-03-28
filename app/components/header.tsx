@@ -7,29 +7,17 @@ import { Sun, Moon, Menu, X } from 'lucide-react'
 
 export function Header() {
   const pathname = usePathname()
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem('theme') as 'light' | 'dark' | null
-    if (stored) {
-      setTheme(stored)
-      document.documentElement.setAttribute('data-theme', stored)
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setTheme(prefersDark ? 'dark' : 'light')
-      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light')
+    const stored = localStorage.getItem('theme')
+    if (stored === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light')
     }
   }, [])
 
-  const toggleTheme = () => {
-    const next = theme === 'light' ? 'dark' : 'light'
-    setTheme(next)
-    document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('theme', next)
-  }
-
   const navLinks = [
+    { href: '/', label: 'Home' },
     { href: '/services', label: 'Leistungen' },
     { href: '/about', label: 'Über' },
     { href: '/kontakt', label: 'Kontakt' },
@@ -41,7 +29,7 @@ export function Header() {
         <div className="container">
           <div className="nav-inner">
             <Link href="/" className="nav-logo">
-              devmiro.at
+              devmiro
             </Link>
 
             <nav className="nav-links" aria-label="Hauptnavigation">
@@ -57,15 +45,11 @@ export function Header() {
             </nav>
 
             <div className="nav-actions">
-              <button
-                onClick={toggleTheme}
-                className="theme-toggle"
-                aria-label="Design wechseln"
+              <Link
+                href="/kontakt"
+                className="btn btn-primary"
+                style={{ fontSize: '0.8rem', padding: '0.45rem 1rem' }}
               >
-                {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
-              </button>
-
-              <Link href="/kontakt" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '0.5rem 1.1rem' }}>
                 Projekt starten
               </Link>
 
@@ -85,11 +69,11 @@ export function Header() {
       <div className={`mobile-nav ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
         <div className="mobile-nav-header">
           <Link href="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
-            devmiro.at
+            devmiro
           </Link>
           <button
             onClick={() => setMenuOpen(false)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)' }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#fff' }}
             aria-label="Menü schließen"
           >
             <X size={24} />

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Instrument_Serif } from 'next/font/google'
+import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -14,10 +14,9 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
-const instrumentSerif = Instrument_Serif({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
-  variable: '--font-instrument-serif',
-  weight: '400',
+  variable: '--font-space-grotesk',
   display: 'swap',
 })
 
@@ -101,7 +100,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="de" className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
+    <html
+      lang="de"
+      className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}
+    >
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <script

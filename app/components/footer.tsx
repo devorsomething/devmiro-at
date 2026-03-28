@@ -9,12 +9,29 @@ export function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link href="/" className="footer-logo">
-              devmiro.at
+              devmiro
             </Link>
             <p className="footer-tagline">
               IT-Lösungen für Vorarlberg KMUs. Websites, KI-Chatbots und
               Business-Automatisierung — alles aus einer Hand.
             </p>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              {[
+                { label: 'Github', href: 'https://github.com' },
+                { label: 'LinkedIn', href: '#' },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="tech-badge"
+                  style={{ textDecoration: 'none' }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {social.label}
+                </a>
+              ))}
+            </div>
           </div>
 
           <div>
