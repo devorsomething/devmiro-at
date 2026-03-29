@@ -42,7 +42,7 @@ export default function KontaktPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1200))
     setSubmitted(true)
     setSubmitting(false)
   }
@@ -59,17 +59,21 @@ export default function KontaktPage() {
   return (
     <>
       <Header />
+
       <main>
 
         {/* ===== PAGE HERO ===== */}
         <section className="page-hero">
-          <div className="page-hero-bg" />
+          <div className="page-hero__bg" />
           <div className="container">
-            <div className="page-hero-label">
-              <Sparkles size={12} />
+            <div className="page-hero__eyebrow">
+              <Sparkles size={10} />
               Kontakt
             </div>
-            <h1>Sprechen Sie mit mir.</h1>
+            <h1>
+              Sprechen Sie<br />
+              <span className="section-title__accent">mit mir.</span>
+            </h1>
             <p>
               Kostenloses Erstgespräch, ehrliche Beratung, unverbindliches Angebot.
               Ich freue mich auf Ihr Projekt.
@@ -77,301 +81,190 @@ export default function KontaktPage() {
           </div>
         </section>
 
-        {/* ===== CONTACT CONTENT ===== */}
-        <section style={{ padding: 'clamp(5rem, 10vw, 10rem) 0', background: 'var(--bg-primary)' }}>
+        {/* ===== CONTACT SECTION ===== */}
+        <section className="kontakt">
           <div className="container">
-            <div className="kontakt-grid">
+            <div className="kontakt__grid">
 
-              {/* FORM */}
-              <div>
+              {/* ===== FORM ===== */}
+              <div className="kontakt__form-wrap">
                 {submitted ? (
-                  <div style={{
-                    background: 'var(--bg-secondary)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    borderRadius: 'var(--radius-lg)',
-                    padding: '4rem',
-                    textAlign: 'center',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '1.5rem',
-                  }}>
-                    <div style={{
-                      width: 72, height: 72,
-                      borderRadius: '50%',
-                      background: 'rgba(212,255,0,0.1)',
-                      border: '1px solid rgba(212,255,0,0.2)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'var(--accent)',
-                    }}>
-                      <Check size={32} />
+                  <div className="form-success">
+                    <div className="form-success__icon">
+                      <Check size={36} />
                     </div>
-                    <h2 style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '2.5rem',
-                      color: 'var(--text-primary)',
-                      textTransform: 'uppercase',
-                      lineHeight: 1,
-                    }}>
-                      NACHRICHT GESENDET!
-                    </h2>
-                    <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', maxWidth: '40ch' }}>
+                    <h2 className="form-success__title">Nachricht gesendet!</h2>
+                    <p className="form-success__text">
                       Vielen Dank für Ihre Anfrage. Ich melde mich innerhalb
                       von 48 Stunden bei Ihnen — versprochen.
                     </p>
-                    <Link href="/" className="btn btn-secondary">
+                    <Link href="/" className="btn btn--outline">
                       Zurück zur Startseite
                     </Link>
                   </div>
                 ) : (
-                  <form
-                    onSubmit={handleSubmit}
-                    style={{
-                      background: 'var(--bg-secondary)',
-                      border: '1px solid rgba(255,255,255,0.05)',
-                      borderRadius: 'var(--radius-lg)',
-                      padding: '3rem',
-                    }}
-                  >
-                    <h2 style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '2rem',
-                      color: 'var(--text-primary)',
-                      textTransform: 'uppercase',
-                      marginBottom: '2.5rem',
-                    }}>
-                      Projektanfrage
-                    </h2>
+                  <>
+                    <h2 className="kontakt__form-title">Projektanfrage</h2>
 
-                    <div className="form-group">
-                      <label htmlFor="name" className="form-label">Name *</label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        value={formState.name}
-                        onChange={handleChange}
-                        className="form-input"
-                        placeholder="Max Mustermann"
-                      />
-                    </div>
+                    <form onSubmit={handleSubmit}>
+                      <div className="form-group">
+                        <label htmlFor="name" className="form-label">Name *</label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          required
+                          value={formState.name}
+                          onChange={handleChange}
+                          className="form-input"
+                          placeholder="Max Mustermann"
+                        />
+                      </div>
 
-                    <div className="form-group">
-                      <label htmlFor="email" className="form-label">E-Mail *</label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formState.email}
-                        onChange={handleChange}
-                        className="form-input"
-                        placeholder="ihre@firma.at"
-                      />
-                    </div>
+                      <div className="form-group">
+                        <label htmlFor="email" className="form-label">E-Mail *</label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
+                          value={formState.email}
+                          onChange={handleChange}
+                          className="form-input"
+                          placeholder="ihre@firma.at"
+                        />
+                      </div>
 
-                    <div className="form-group">
-                      <label htmlFor="company" className="form-label">Firma (optional)</label>
-                      <input
-                        type="text"
-                        id="company"
-                        name="company"
-                        value={formState.company}
-                        onChange={handleChange}
-                        className="form-input"
-                        placeholder="Ihre Firma GmbH"
-                      />
-                    </div>
+                      <div className="form-group">
+                        <label htmlFor="company" className="form-label">Firma (optional)</label>
+                        <input
+                          type="text"
+                          id="company"
+                          name="company"
+                          value={formState.company}
+                          onChange={handleChange}
+                          className="form-input"
+                          placeholder="Ihre Firma GmbH"
+                        />
+                      </div>
 
-                    <div className="form-group">
-                      <label htmlFor="service" className="form-label">Gewünschte Leistung</label>
-                      <select
-                        id="service"
-                        name="service"
-                        value={formState.service}
-                        onChange={handleChange}
-                        className="form-select"
+                      <div className="form-group">
+                        <label htmlFor="service" className="form-label">Gewünschte Leistung</label>
+                        <select
+                          id="service"
+                          name="service"
+                          value={formState.service}
+                          onChange={handleChange}
+                          className="form-select"
+                        >
+                          <option value="">Bitte auswählen...</option>
+                          {serviceOptions.map((opt) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="message" className="form-label">Ihre Nachricht *</label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          required
+                          value={formState.message}
+                          onChange={handleChange}
+                          className="form-textarea"
+                          placeholder="Erzählen Sie mir von Ihrem Projekt..."
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="form-submit"
+                        disabled={submitting}
                       >
-                        <option value="">Bitte auswählen...</option>
-                        {serviceOptions.map((opt) => (
-                          <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                      </select>
-                    </div>
+                        {submitting ? (
+                          'Wird gesendet...'
+                        ) : (
+                          <>
+                            Nachricht senden
+                            <ArrowRight size={16} />
+                          </>
+                        )}
+                      </button>
 
-                    <div className="form-group">
-                      <label htmlFor="message" className="form-label">Ihre Nachricht *</label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        required
-                        value={formState.message}
-                        onChange={handleChange}
-                        className="form-textarea"
-                        placeholder="Erzählen Sie mir von Ihrem Projekt..."
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-lg"
-                      disabled={submitting}
-                      style={{ width: '100%', marginTop: '0.5rem', justifyContent: 'center' }}
-                    >
-                      {submitting ? (
-                        'Wird gesendet...'
-                      ) : (
-                        <>
-                          Nachricht senden
-                          <ArrowRight size={16} />
-                        </>
-                      )}
-                    </button>
-
-                    <p style={{
-                      fontSize: '0.75rem',
-                      color: 'var(--text-secondary)',
-                      marginTop: '1rem',
-                      textAlign: 'center',
-                    }}>
-                      Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Daten gemäß unserer{' '}
-                      <Link href="/datenschutz" style={{ color: 'var(--accent)' }}>
-                        Datenschutzerklärung
-                      </Link>{' '}
-                      zu.
-                    </p>
-                  </form>
+                      <p className="form-disclaimer">
+                        Mit dem Absenden stimmen Sie der{' '}
+                        <Link href="/datenschutz">Datenschutzerklärung</Link> zu.
+                      </p>
+                    </form>
+                  </>
                 )}
               </div>
 
-              {/* CONTACT INFO */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-                <div>
-                  <h2 style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: '1.8rem',
-                    color: 'var(--text-primary)',
-                    textTransform: 'uppercase',
-                    marginBottom: '1.5rem',
-                  }}>
-                    Oder direkt kontaktieren.
-                  </h2>
+              {/* ===== SIDEBAR ===== */}
+              <div className="kontakt__sidebar">
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    {[
-                      { icon: Mail, label: 'E-Mail', value: 'info@devmiro.at', href: 'mailto:info@devmiro.at' },
-                      { icon: Phone, label: 'Telefon', value: '+43 664 123 4567', href: 'tel:+436641234567' },
-                      { icon: MapPin, label: 'Standort', value: 'Bregenz, Vorarlberg, Österreich', href: null },
-                    ].map((item) => (
-                      <div key={item.label} style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '1.25rem',
-                        padding: '1.25rem',
-                        background: 'var(--bg-secondary)',
-                        border: '1px solid rgba(255,255,255,0.05)',
-                        borderRadius: 'var(--radius-lg)',
-                      }}>
-                        <div style={{
-                          width: 44, height: 44,
-                          borderRadius: 'var(--radius)',
-                          background: 'rgba(212,255,0,0.05)',
-                          border: '1px solid rgba(212,255,0,0.12)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          color: 'var(--accent)',
-                          flexShrink: 0,
-                        }}>
-                          <item.icon size={18} />
+                {/* Info cards */}
+                <div>
+                  <h2 className="kontakt__info-title">Oder direkt kontaktieren.</h2>
+                  <div className="kontakt__info-items">
+                    <div className="kontakt__info-item">
+                      <div className="kontakt__info-icon">
+                        <Mail size={18} />
+                      </div>
+                      <div>
+                        <div className="kontakt__info-label">E-Mail</div>
+                        <div className="kontakt__info-value">
+                          <a href="mailto:info@devmiro.at">info@devmiro.at</a>
                         </div>
-                        <div>
-                          <div style={{
-                            fontSize: '0.65rem',
-                            color: 'var(--text-muted)',
-                            marginBottom: '0.2rem',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.15em',
-                            fontFamily: 'var(--font-mono)',
-                            fontWeight: 700,
-                          }}>
-                            {item.label}
-                          </div>
-                          {item.href ? (
-                            <a href={item.href} style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 500 }}>
-                              {item.value}
-                            </a>
-                          ) : (
-                            <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                              {item.value}
-                            </span>
-                          )}
+                      </div>
+                    </div>
+
+                    <div className="kontakt__info-item">
+                      <div className="kontakt__info-icon">
+                        <Phone size={18} />
+                      </div>
+                      <div>
+                        <div className="kontakt__info-label">Telefon</div>
+                        <div className="kontakt__info-value">
+                          <a href="tel:+436641234567">+43 664 123 4567</a>
                         </div>
+                      </div>
+                    </div>
+
+                    <div className="kontakt__info-item">
+                      <div className="kontakt__info-icon">
+                        <MapPin size={18} />
+                      </div>
+                      <div>
+                        <div className="kontakt__info-label">Standort</div>
+                        <div className="kontakt__info-value">Bregenz, Vorarlberg, Österreich</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Process */}
+                <div className="kontakt__steps">
+                  <h3 className="kontakt__steps-title">Was passiert nach Ihrer Anfrage?</h3>
+                  <div className="kontakt__steps-list">
+                    {steps.map((step, i) => (
+                      <div key={i} className="kontakt__step">
+                        <div className="kontakt__step-num">{i + 1}</div>
+                        <span>{step}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div style={{
-                  background: 'rgba(212,255,0,0.03)',
-                  border: '1px solid rgba(212,255,0,0.1)',
-                  borderRadius: 'var(--radius-lg)',
-                  padding: '2.5rem',
-                }}>
-                  <h3 style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: '1.4rem',
-                    color: 'var(--text-primary)',
-                    textTransform: 'uppercase',
-                    marginBottom: '1.5rem',
-                  }}>
-                    Was passiert nach Ihrer Anfrage?
-                  </h3>
-                  <ol style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '1.25rem',
-                  }}>
-                    {steps.map((step, i) => (
-                      <li key={i} style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '1rem',
-                        fontSize: '0.875rem',
-                        color: 'var(--text-secondary)',
-                      }}>
-                        <span style={{
-                          width: 24, height: 24,
-                          borderRadius: '50%',
-                          background: 'var(--accent)',
-                          color: '#000',
-                          fontSize: '0.7rem',
-                          fontWeight: 700,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          marginTop: '1px',
-                        }}>
-                          {i + 1}
-                        </span>
-                        {step}
-                      </li>
-                    ))}
-                  </ol>
-                </div>
               </div>
+
             </div>
           </div>
         </section>
 
       </main>
+
       <Footer />
     </>
   )

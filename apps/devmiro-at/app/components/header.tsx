@@ -3,20 +3,11 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { Sun, Moon, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 export function Header() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   useEffect(() => {
     if (menuOpen) {
@@ -35,39 +26,36 @@ export function Header() {
 
   return (
     <>
-      <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
+      <header className="header">
         <div className="container">
-          <div className="nav-inner">
-            <Link href="/" className="logo">
-              devmiro.at
+          <div className="header__inner">
+            <Link href="/" className="header__logo">
+              devmiro<span>.</span>
             </Link>
 
-            <nav className="nav-links" aria-label="Hauptnavigation">
+            <nav className="header__nav" aria-label="Hauptnavigation">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={pathname === link.href ? 'active' : ''}
-                  style={{
-                    color: pathname === link.href ? 'var(--accent)' : undefined,
-                  }}
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
 
-            <div className="nav-actions">
-              <Link href="/kontakt" className="btn btn-primary">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <Link href="/kontakt" className="header__cta">
                 Projekt starten
               </Link>
 
               <button
-                className="mobile-menu-btn"
+                className="header__mobile-btn"
                 onClick={() => setMenuOpen(true)}
                 aria-label="Menü öffnen"
               >
-                <Menu size={20} />
+                <Menu size={22} />
               </button>
             </div>
           </div>
@@ -81,23 +69,23 @@ export function Header() {
         role="dialog"
         aria-modal="true"
       >
-        <div className="mobile-nav-header">
+        <div className="mobile-nav__header">
           <Link
             href="/"
-            className="logo"
+            className="mobile-nav__logo"
             onClick={() => setMenuOpen(false)}
           >
-            devmiro.at
+            devmiro<span>.</span>
           </Link>
           <button
+            className="mobile-nav__close"
             onClick={() => setMenuOpen(false)}
-            style={{ background: 'none', border: 'none', cursor: 'none', color: 'var(--text-primary)' }}
             aria-label="Menü schließen"
           >
             <X size={24} />
           </button>
         </div>
-        <div className="mobile-nav-links">
+        <nav className="mobile-nav__links">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -107,17 +95,14 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-        </div>
-        <div style={{ marginTop: 'auto', paddingTop: '2rem' }}>
-          <Link
-            href="/kontakt"
-            className="btn btn-primary btn-lg"
-            style={{ width: '100%', justifyContent: 'center' }}
-            onClick={() => setMenuOpen(false)}
-          >
-            Projekt starten →
-          </Link>
-        </div>
+        </nav>
+        <Link
+          href="/kontakt"
+          className="mobile-nav__cta"
+          onClick={() => setMenuOpen(false)}
+        >
+          Projekt starten →
+        </Link>
       </div>
     </>
   )

@@ -1,25 +1,5 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, Outfit, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-
-const bebasNeue = Bebas_Neue({
-  subsets: ['latin'],
-  variable: '--font-bebas',
-  weight: '400',
-  display: 'swap',
-})
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  variable: '--font-outfit',
-  display: 'swap',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://devmiro.at'),
@@ -108,72 +88,34 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${bebasNeue.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
-        {/* Noise overlay */}
-        <div className="noise-overlay" aria-hidden="true" />
-        {/* Custom cursor */}
-        <div className="cursor" id="cursor" aria-hidden="true" />
-        <div className="cursor-dot" id="cursor-dot" aria-hidden="true" />
+      <body>
         {children}
-        <CursorScript />
+        <RevealScript />
       </body>
     </html>
   )
 }
 
-function CursorScript() {
+function RevealScript() {
   return (
     <script
       dangerouslySetInnerHTML={{
         __html: `
           (function() {
-            var cursor = document.getElementById('cursor');
-            var cursorDot = document.getElementById('cursor-dot');
-            if (!cursor || !cursorDot) return;
-            if ('ontouchstart' in window) {
-              cursor.style.display = 'none';
-              cursorDot.style.display = 'none';
-              return;
-            }
+            var els = document.querySelectorAll('.reveal');
+            if (!els.length) return;
+            var io = new IntersectionObserver(function(entries) {
+              entries.forEach(function(e) {
+                if (e.isIntersecting) {
+                  e.target.classList.add('visible');
+                  io.unobserve(e.target);
+                }
+              });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
 
-            var pos = { x: -100, y: -100 };
-            var dotPos = { x: -100, y: -100 };
-
-            document.addEventListener('mousemove', function(e) {
-              pos.x = e.clientX;
-              pos.y = e.clientY;
-            });
-
-            for (var i = 0; i < 4; i++) {
-              var t = document.createElement('div');
-              t.className = 'cursor-trail';
-              t.style.opacity = (0.25 - i * 0.05).toString();
-              t.style.width = (6 - i) + 'px';
-              t.style.height = (6 - i) + 'px';
-              document.body.appendChild(t);
-            }
-
-            function animate() {
-              dotPos.x += (pos.x - dotPos.x) * 0.85;
-              dotPos.y += (pos.y - dotPos.y) * 0.85;
-              cursor.style.left = pos.x + 'px';
-              cursor.style.top = pos.y + 'px';
-              cursorDot.style.left = dotPos.x + 'px';
-              cursorDot.style.top = dotPos.y + 'px';
-              requestAnimationFrame(animate);
-            }
-            animate();
-
-            var hoverEls = document.querySelectorAll('a, button, [role="button"]');
-            hoverEls.forEach(function(el) {
-              el.addEventListener('mouseenter', function() { cursor.classList.add('hovering'); });
-              el.addEventListener('mouseleave', function() { cursor.classList.remove('hovering'); });
-            });
-          })();
-
-          // FAQ accordion
-          (function() {
-            var questions = document.querySelectorAll('.faq-question-v2');
+            // FAQ accordion
+            var questions = document.querySelectorAll('.faq-item__question');
             questions.forEach(function(btn) {
               btn.addEventListener('click', function() {
                 var answer = btn.nextElementSibling;
