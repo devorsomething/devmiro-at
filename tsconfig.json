@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -11,7 +15,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -19,9 +23,40 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "app/**/*.ts", "app/**/*.tsx", "components/**/*.ts", "components/**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "apps", "business-tools", "clients", "configs", "docs", "notes", "offers", "projects", "research", "secrets", "services", "skills", "uploads", "exports", "logs", "cron_logs", "cron_runs", "cron-runs", "memory"]
+  "include": [
+    "next-env.d.ts",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "apps",
+    "business-tools",
+    "clients",
+    "configs",
+    "docs",
+    "notes",
+    "offers",
+    "projects",
+    "research",
+    "secrets",
+    "services",
+    "skills",
+    "uploads",
+    "exports",
+    "logs",
+    "cron_logs",
+    "cron_runs",
+    "cron-runs",
+    "memory"
+  ]
 }
