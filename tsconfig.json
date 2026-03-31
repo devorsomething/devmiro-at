@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "business-tools", "clients", "configs", "docs", "notes", "offers", "projects", "research", "secrets", "services", "skills", "uploads", "exports", "logs", "cron_logs", "cron_runs", "cron-runs", "memory"]
+  "include": ["next-env.d.ts", "app/**/*.ts", "app/**/*.tsx", "components/**/*.ts", "components/**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", "apps", "business-tools", "clients", "configs", "docs", "notes", "offers", "projects", "research", "secrets", "services", "skills", "uploads", "exports", "logs", "cron_logs", "cron_runs", "cron-runs", "memory"]
 }
