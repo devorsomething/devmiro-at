@@ -1,21 +1,21 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const inter = Inter({
-  subsets: ['latin'],
+const inter = localFont({
+  src: '../public/fonts/inter-latin-wght-normal.woff2',
   variable: '--font-inter',
   display: 'swap',
 })
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
+const jetbrainsMono = localFont({
+  src: '../public/fonts/jetbrains-mono-latin-wght-normal.woff2',
   variable: '--font-jetbrains-mono',
   display: 'swap',
 })
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
+const spaceGrotesk = localFont({
+  src: '../public/fonts/space-grotesk-latin-wght-normal.woff2',
   variable: '--font-space-grotesk',
   display: 'swap',
 })
