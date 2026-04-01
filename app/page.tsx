@@ -233,7 +233,7 @@ export default function HomePage() {
               <span className="hero-headline-main">Webentwicklung.</span>
               <br />
               <span className="hero-headline-accent">
-                <TypewriterText words={['Ohne', 'Kompromisse.', 'Keine', 'Ausreden.']} />
+                <TypewriterText words={['Kompromisse.']} />
               </span>
             </h1>
 
