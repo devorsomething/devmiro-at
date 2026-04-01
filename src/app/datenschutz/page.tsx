@@ -216,7 +216,7 @@ export default function Datenschutz() {
                 <strong className="text-[#F5F5F7]">Kunden-/Projektdaten:</strong> Während der Geschäftsbeziehung + gesetzliche Aufbewahrungsfristen (7 Jahre gemäß § 132 BAO)
               </li>
               <li>
-                <strong className="text-[#F5F5F7]">Server-Logs:</strong> Maximiert 30 Tage (technisch notwendig)
+                <strong className="text-[#F5F5F7]">Server-Logs:</strong> Maximal 30 Tage (technisch notwendig)
               </li>
             </ul>
           </div>
