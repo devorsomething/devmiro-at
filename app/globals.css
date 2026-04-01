@@ -77,7 +77,7 @@
    3. SCROLL REVEAL SYSTEM
    -------------------------------------------- */
 .reveal {
-  opacity: 0;
+  /* opacity: 0; */
   transform: translateY(40px);
   transition: all var(--duration-slower) var(--ease-out-expo);
 }
@@ -88,7 +88,7 @@
 }
 
 .reveal-left {
-  opacity: 0;
+  /* opacity: 0; */
   transform: translateX(-40px);
   transition: all var(--duration-slower) var(--ease-out-expo);
 }
@@ -99,7 +99,7 @@
 }
 
 .reveal-scale {
-  opacity: 0;
+  /* opacity: 0; */
   transform: scale(0.92);
   transition: all var(--duration-slower) var(--ease-out-expo);
 }
@@ -111,7 +111,7 @@
 
 /* Staggered reveal for children */
 .reveal-stagger > * {
-  opacity: 0;
+  /* opacity: 0; */
   transform: translateY(30px);
   transition: all var(--duration-slower) var(--ease-out-expo);
 }
