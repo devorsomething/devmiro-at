@@ -47,9 +47,9 @@ export default function PremiumLanding() {
         </div>
         
         <div className="hidden md:flex items-center gap-10 text-sm font-semibold tracking-wide text-gray-300">
-          <Link href="/services" className="hover:text-white hover:text-[#00E5FF] transition-colors duration-300">Leistungen</Link>
-          <Link href="/it-companies" className="hover:text-white hover:text-[#00E5FF] transition-colors duration-300">IT-Firmen</Link>
-          <Link href="/fixed-price" className="hover:text-white hover:text-[#00E5FF] transition-colors duration-300">Fixpreis</Link>
+          <button onClick={() => { setActiveTab('services'); window.scrollTo({top: 800, behavior: 'smooth'}); }} className={`hover:text-white transition-colors duration-300 ${activeTab === 'services' ? 'text-[#00E5FF]' : 'text-gray-300'}`}>Leistungen</button>
+          <button onClick={() => { setActiveTab('industries'); window.scrollTo({top: 800, behavior: 'smooth'}); }} className={`hover:text-white transition-colors duration-300 ${activeTab === 'industries' ? 'text-[#00E5FF]' : 'text-gray-300'}`}>IT-Firmen</button>
+          <button onClick={() => { setActiveTab('pricing'); window.scrollTo({top: 800, behavior: 'smooth'}); }} className={`hover:text-white transition-colors duration-300 ${activeTab === 'pricing' ? 'text-[#00E5FF]' : 'text-gray-300'}`}>Fixpreis</button>
           <Link href="/start">
             <button className="px-7 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00E5FF]/50 hover:shadow-[0_0_20px_rgba(0,229,255,0.3)] transition-all duration-300 font-bold backdrop-blur-md">
               Projekt starten
@@ -89,12 +89,10 @@ export default function PremiumLanding() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
               </button>
             </Link>
-            <Link href="/services" className="w-full sm:w-auto">
-              <button className="w-full px-10 py-5 rounded-full glass-panel hover:bg-white/10 text-white font-bold text-lg border border-white/20 hover:border-white/50 transition-all duration-500 flex items-center justify-center gap-3 group">
+            <button onClick={() => { setActiveTab('services'); window.scrollTo({top: 800, behavior: 'smooth'}); }} className="w-full sm:w-auto px-10 py-5 rounded-full glass-panel hover:bg-white/10 text-white font-bold text-lg border border-white/20 hover:border-white/50 transition-all duration-500 flex items-center justify-center gap-3 group">
                 Leistungen ansehen
                 <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
               </button>
-            </Link>
           </div>
 
           {/* Scroll Indicator */}
@@ -106,7 +104,43 @@ export default function PremiumLanding() {
           </div>
         </section>
 
+        
+        {/* Sticky Category Switcher */}
+        <div className="sticky top-20 z-40 w-full px-4 flex justify-center mb-12 pt-6">
+          <div className="glass-panel bg-[#050507]/80 backdrop-blur-xl rounded-full p-2 flex gap-2 overflow-x-auto hide-scrollbar max-w-full shadow-[0_10px_40px_rgba(0,0,0,0.8)] border border-white/10">
+            <button onClick={() => setActiveTab('services')} className={`px-6 py-3 rounded-full text-sm sm:text-base font-bold whitespace-nowrap transition-all duration-300 ${activeTab === 'services' ? 'bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow-[0_0_20px_rgba(0,229,255,0.4)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
+              IT-Leistungen
+            </button>
+            <button onClick={() => setActiveTab('industries')} className={`px-6 py-3 rounded-full text-sm sm:text-base font-bold whitespace-nowrap transition-all duration-300 ${activeTab === 'industries' ? 'bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow-[0_0_20px_rgba(0,229,255,0.4)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
+              Für IT-Firmen
+            </button>
+            <button onClick={() => setActiveTab('pricing')} className={`px-6 py-3 rounded-full text-sm sm:text-base font-bold whitespace-nowrap transition-all duration-300 ${activeTab === 'pricing' ? 'bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow-[0_0_20px_rgba(0,229,255,0.4)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
+              Fixpreis-Modell
+            </button>
+          </div>
+        </div>
+
+        {/* Dynamic Tab Content */}
+        <div className="w-full relative z-10 min-h-[50vh]">
+          {activeTab === 'services' && (
+            <div key="services" className="animate-[fade-in_0.5s_ease-out]">
+              <ServicesContent />
+            </div>
+          )}
+          {activeTab === 'industries' && (
+            <div key="industries" className="animate-[fade-in_0.5s_ease-out]">
+              <ITCompaniesContent />
+            </div>
+          )}
+          {activeTab === 'pricing' && (
+            <div key="pricing" className="animate-[fade-in_0.5s_ease-out]">
+              <FixedPriceContent />
+            </div>
+          )}
+        </div>
+
         {/* Core Values Section */}
+
         <section id="values" className="py-40 px-6 max-w-7xl mx-auto">
           <div className="text-center mb-24">
             <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-bold tracking-widest text-gray-400 mb-6">

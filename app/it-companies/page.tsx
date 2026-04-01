@@ -1,6 +1,6 @@
 'use client';
 
-import CategorySwitcher from '@/components/CategorySwitcher';
+
 
 export default function ITCompaniesPage() {
   return (
@@ -12,7 +12,7 @@ export default function ITCompaniesPage() {
         paddingTop: 100, paddingBottom: 4,
         position: 'relative', overflow: 'hidden',
       }}>
-        <CategorySwitcher />
+        
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
           background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,180,216,0.08) 0%, transparent 70%)',

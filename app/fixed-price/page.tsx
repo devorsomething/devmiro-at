@@ -1,11 +1,8 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import CategorySwitcher from '@/components/CategorySwitcher';
 
-export const metadata: Metadata = {
-  title: "Fixed Price Web Design | DEVMIRO",
-  description: "Fixpreis Web Design — keine Überraschungen, kein Stundenzettel. Sie wissen exakt, was Ihre Website kostet, BEVOR wir starten.",
-};
+import Link from "next/link";
+
+
+
 
 const included = [
   'Custom Figma Design (kein Template)',
@@ -36,7 +33,7 @@ export default function FixedPricePage() {
       <section className="pt-32 pb-16 bg-[#050507] bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,_rgba(0,229,255,0.06)_0%,_transparent_70%)] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#8B5CF6] rounded-full mix-blend-screen filter blur-[150px] opacity-10 animate-blob"></div>
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#00E5FF] rounded-full mix-blend-screen filter blur-[150px] opacity-10 animate-blob animation-delay-2000"></div>
-        <CategorySwitcher />
+        
         <div className="container-max relative z-10">
           <div className="section-tag animate-fade-in-up mb-6">
             Transparent & Fair

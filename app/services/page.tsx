@@ -1,11 +1,8 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import CategorySwitcher from '@/components/CategorySwitcher';
 
-export const metadata: Metadata = {
-  title: "Services | DEVMIRO — Web Design Services",
-  description: "Custom Web Design Services für B2B-Unternehmen. WordPress, SEO, DSGVO — alles inklusive. Fixed Price.",
-};
+import Link from "next/link";
+
+
+
 
 const services = [
   {
@@ -98,7 +95,7 @@ export default function ServicesPage() {
     <>
       {/* Hero */}
       <section className="pt-32 pb-16 relative overflow-hidden bg-gradient-radial from-[#00E5FF]/5 to-transparent">
-        <CategorySwitcher />
+        
         <div className="container-max relative z-10">
           <div className="section-tag animate-fade-in-up mb-6">
             Unsere Leistungen
