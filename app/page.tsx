@@ -622,69 +622,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============================================
-          FOOTER
-          ============================================ */}
-      <footer className="footer">
-        <div className="footer-gradient-line" />
-        <div className="container-max footer-inner">
-          {/* Brand Column */}
-          <div className="footer-brand">
-            <div className="footer-logo">
-              <svg width="40" height="40" viewBox="0 0 100 100">
-                <rect width="100" height="100" rx="20" fill="var(--graphite)"/>
-                <text x="50" y="68" textAnchor="middle" fontSize="50" fontWeight="bold" fill="var(--electric)">D</text>
-              </svg>
-              <span className="footer-logo-text">DEVMIRO</span>
-            </div>
-            <p className="footer-tagline">Webentwicklung ohne Kompromisse. IT-Lösungen für Vorarlberg KMUs.</p>
-          </div>
-
-          {/* Navigation Columns */}
-          <div className="footer-nav-grid">
-            <div className="footer-nav-column">
-              <h4 className="footer-nav-title">Services</h4>
-              <ul className="footer-nav-list">
-                <li><a href="/services">Webentwicklung</a></li>
-                <li><a href="/services">WordPress CMS</a></li>
-                <li><a href="/services">SEO Optimierung</a></li>
-                <li><a href="/fixed-price">Fixed Price</a></li>
-              </ul>
-            </div>
-
-            <div className="footer-nav-column">
-              <h4 className="footer-nav-title">Company</h4>
-              <ul className="footer-nav-list">
-                <li><a href="/about">Über uns</a></li>
-                <li><a href="/projects">Projekte</a></li>
-                <li><a href="/kontakt">Kontakt</a></li>
-                <li><a href="/start">Projekt starten</a></li>
-              </ul>
-            </div>
-
-            <div className="footer-nav-column">
-              <h4 className="footer-nav-title">Legal</h4>
-              <ul className="footer-nav-list">
-                <li><a href="/datenschutz">Datenschutz</a></li>
-                <li><a href="/impressum">Impressum</a></li>
-                <li><a href="/agb">AGB</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="footer-bottom">
-          <div className="container-max footer-bottom-inner">
-            <p className="footer-copyright">© 2026 Devmiro. Alle Rechte vorbehalten.</p>
-            <div className="footer-links">
-              <a href="/datenschutz">Datenschutz</a>
-              <span className="footer-link-divider">·</span>
-              <a href="/impressum">Impressum</a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
