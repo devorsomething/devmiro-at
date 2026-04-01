@@ -4,71 +4,37 @@ export default function KontaktPage() {
   return (
     <>
       {/* Hero */}
-      <section
-        style={{
-          minHeight: "50vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          paddingTop: 100,
-          paddingBottom: 4,
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,180,216,0.07) 0%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
-
+      <section className="hero-section">
+        <div className="hero-grid-bg" />
         <div className="container-max" style={{ position: "relative", zIndex: 1 }}>
-          <div className="section-tag animate-fade-in-up" style={{ marginBottom: "1.5rem" }}>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <circle cx="6" cy="6" r="3" fill="#00b4d8" />
-              <circle cx="6" cy="6" r="5.5" stroke="#00b4d8" strokeWidth="1" opacity="0.4" />
-            </svg>
-            Kontakt
+          <div className="hero-left">
+            <div className="hero-tag animate-fade-in-up">
+              <svg width="8" height="8" viewBox="0 0 8 8">
+                <circle cx="4" cy="4" r="4" fill="var(--electric)" />
+              </svg>
+              Kontakt
+            </div>
+
+            <h1
+              className="hero-headline animate-fade-in-up delay-100"
+              style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", maxWidth: 640 }}
+            >
+              Sprechen Sie<br />
+              <span style={{ color: "var(--electric)" }}>mit uns.</span>
+            </h1>
+
+            <p
+              className="hero-subtext animate-fade-in-up delay-200"
+              style={{ maxWidth: 480 }}
+            >
+              Haben Sie ein Projekt im Sinn oder einfach nur eine Frage? Wir freuen uns von Ihnen zu hören.
+            </p>
           </div>
-
-          <h1
-            className="animate-fade-in-up delay-100"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)",
-              fontWeight: 800,
-              lineHeight: 1.1,
-              color: "#f0f6fc",
-              marginBottom: "1.25rem",
-              letterSpacing: "-0.03em",
-            }}
-          >
-            Sprechen Sie mit uns
-          </h1>
-
-          <p
-            className="animate-fade-in-up delay-200"
-            style={{
-              fontSize: "clamp(1rem, 2vw, 1.2rem)",
-              color: "#8b949e",
-              lineHeight: 1.7,
-              maxWidth: 560,
-            }}
-          >
-            Haben Sie ein Projekt im Sinn oder einfach nur eine Frage? Wir freuen uns von Ihnen zu hören.
-          </p>
         </div>
       </section>
 
       {/* Contact Form + Info */}
-      <section style={{ padding: "4rem 0 8rem", background: "#070b14" }}>
+      <section style={{ padding: "4rem 0 8rem", background: "var(--graphite)" }}>
         <div className="container-max">
           <div
             style={{
@@ -82,10 +48,10 @@ export default function KontaktPage() {
             <div>
               <h2
                 style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontFamily: "'Instrument Serif', Georgia, serif",
                   fontSize: "1.5rem",
                   fontWeight: 700,
-                  color: "#f0f6fc",
+                  color: "var(--white)",
                   marginBottom: "1rem",
                   letterSpacing: "-0.02em",
                 }}
@@ -95,7 +61,7 @@ export default function KontaktPage() {
               <p
                 style={{
                   fontSize: "0.95rem",
-                  color: "#8b949e",
+                  color: "var(--ash)",
                   lineHeight: 1.7,
                   marginBottom: "2.5rem",
                 }}
@@ -106,7 +72,7 @@ export default function KontaktPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                 <ContactInfoItem
                   icon={
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--electric)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                       <polyline points="22,6 12,13 2,6" />
                     </svg>
@@ -116,7 +82,7 @@ export default function KontaktPage() {
                 />
                 <ContactInfoItem
                   icon={
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--electric)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                       <circle cx="12" cy="10" r="3" />
                     </svg>
@@ -126,7 +92,7 @@ export default function KontaktPage() {
                 />
                 <ContactInfoItem
                   icon={
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--electric)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="12" r="10" />
                       <polyline points="12,6 12,12 16,14" />
                     </svg>
@@ -141,8 +107,8 @@ export default function KontaktPage() {
                 style={{
                   marginTop: "3rem",
                   padding: "1.75rem",
-                  background: "rgba(0,180,216,0.04)",
-                  border: "1px solid rgba(0,180,216,0.15)",
+                  background: "rgba(200,255,0,0.04)",
+                  border: "1px solid rgba(200,255,0,0.15)",
                   borderRadius: 12,
                 }}
               >
@@ -152,7 +118,7 @@ export default function KontaktPage() {
                     fontWeight: 600,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#00b4d8",
+                    color: "var(--electric)",
                     marginBottom: "1rem",
                   }}
                 >
@@ -171,12 +137,12 @@ export default function KontaktPage() {
                       alignItems: "flex-start",
                       gap: "0.6rem",
                       fontSize: "0.875rem",
-                      color: "#8b949e",
+                      color: "var(--ash)",
                       marginBottom: "0.6rem",
                     }}
                   >
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: 2 }}>
-                      <path d="M3 8l3.5 3.5L13 4.5" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M3 8l3.5 3.5L13 4.5" stroke="var(--electric)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {item}
                   </div>
@@ -190,15 +156,15 @@ export default function KontaktPage() {
                 className="card"
                 style={{
                   padding: "2.5rem",
-                  background: "rgba(0,180,216,0.02)",
+                  background: "rgba(200,255,0,0.02)",
                 }}
               >
                 <h2
                   style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "'Instrument Serif', Georgia, serif",
                     fontSize: "1.25rem",
                     fontWeight: 700,
-                    color: "#f0f6fc",
+                    color: "var(--white)",
                     marginBottom: "0.4rem",
                     letterSpacing: "-0.02em",
                   }}
@@ -208,7 +174,7 @@ export default function KontaktPage() {
                 <p
                   style={{
                     fontSize: "0.875rem",
-                    color: "#8b949e",
+                    color: "var(--ash)",
                     marginBottom: "2rem",
                   }}
                 >
@@ -241,7 +207,7 @@ export default function KontaktPage() {
                         display: "block",
                         fontSize: "0.8rem",
                         fontWeight: 600,
-                        color: "#8b949e",
+                        color: "var(--ash)",
                         marginBottom: "0.5rem",
                         letterSpacing: "0.02em",
                       }}
@@ -252,10 +218,10 @@ export default function KontaktPage() {
                       style={{
                         width: "100%",
                         padding: "0.75rem 1rem",
-                        background: "#0c1220",
-                        border: "1px solid rgba(26,42,66,0.8)",
+                        background: "var(--graphite)",
+                        border: "1px solid rgba(255,255,255,0.08)",
                         borderRadius: 8,
-                        color: "#8b949e",
+                        color: "var(--ash)",
                         fontSize: "0.9rem",
                         outline: "none",
                         cursor: "pointer",
@@ -280,7 +246,7 @@ export default function KontaktPage() {
                         display: "block",
                         fontSize: "0.8rem",
                         fontWeight: 600,
-                        color: "#8b949e",
+                        color: "var(--ash)",
                         marginBottom: "0.5rem",
                         letterSpacing: "0.02em",
                       }}
@@ -294,12 +260,12 @@ export default function KontaktPage() {
                       style={{
                         width: "100%",
                         padding: "0.75rem 1rem",
-                        background: "#0c1220",
-                        border: "1px solid rgba(26,42,66,0.8)",
+                        background: "var(--graphite)",
+                        border: "1px solid rgba(255,255,255,0.08)",
                         borderRadius: 8,
-                        color: "#f0f6fc",
+                        color: "var(--white)",
                         fontSize: "0.9rem",
-                        fontFamily: "'Inter', sans-serif",
+                        fontFamily: "'DM Sans', sans-serif",
                         outline: "none",
                         resize: "vertical",
                         minHeight: 120,
@@ -307,10 +273,10 @@ export default function KontaktPage() {
                       }}
                       onFocus={(e) => {
                         e.target.style.borderColor = "rgba(0,180,216,0.5)";
-                        e.target.style.boxShadow = "0 0 0 3px rgba(0,180,216,0.08)";
+                        e.target.style.boxShadow = "0 0 0 3px rgba(200,255,0,0.08)";
                       }}
                       onBlur={(e) => {
-                        e.target.style.borderColor = "rgba(26,42,66,0.8)";
+                        e.target.style.borderColor = "rgba(255,255,255,0.08)";
                         e.target.style.boxShadow = "none";
                       }}
                     />
@@ -323,7 +289,7 @@ export default function KontaktPage() {
                       alignItems: "flex-start",
                       gap: "0.75rem",
                       fontSize: "0.8rem",
-                      color: "#4a5568",
+                      color: "var(--ash)",
                       lineHeight: 1.6,
                     }}
                   >
@@ -332,14 +298,14 @@ export default function KontaktPage() {
                       required
                       style={{
                         marginTop: 2,
-                        accentColor: "#00b4d8",
+                        accentColor: "var(--electric)",
                         cursor: "pointer",
                         flexShrink: 0,
                       }}
                     />
                     <span>
                       Ich stimme zu, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet werden.{" "}
-                      <a href="/gdpr" style={{ color: "#00b4d8", textDecoration: "none" }}>
+                      <a href="/gdpr" style={{ color: "var(--electric)", textDecoration: "none" }}>
                         Datenschutzerklärung
                       </a>
                       .
@@ -365,7 +331,7 @@ export default function KontaktPage() {
                     </svg>
                   </button>
 
-                  <p style={{ fontSize: "0.75rem", color: "#4a5568", textAlign: "center" }}>
+                  <p style={{ fontSize: "0.75rem", color: "var(--ash)", textAlign: "center" }}>
                     Wir antworten innerhalb von 24 Stunden. Kein Spam, keine Weitergabe Ihrer Daten.
                   </p>
                 </form>
@@ -394,8 +360,8 @@ function ContactInfoItem({
           width: 40,
           height: 40,
           borderRadius: 8,
-          background: "rgba(0,180,216,0.08)",
-          border: "1px solid rgba(0,180,216,0.15)",
+          background: "rgba(200,255,0,0.08)",
+          border: "1px solid rgba(200,255,0,0.15)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -411,13 +377,13 @@ function ContactInfoItem({
             fontWeight: 600,
             letterSpacing: "0.08em",
             textTransform: "uppercase",
-            color: "#4a5568",
+            color: "var(--ash)",
             marginBottom: "0.2rem",
           }}
         >
           {label}
         </div>
-        <div style={{ fontSize: "0.9rem", color: "#f0f6fc" }}>{value}</div>
+        <div style={{ fontSize: "0.9rem", color: "var(--white)" }}>{value}</div>
       </div>
     </div>
   );
@@ -439,7 +405,7 @@ function FormField({
           display: "block",
           fontSize: "0.8rem",
           fontWeight: 600,
-          color: "#8b949e",
+          color: "var(--ash)",
           marginBottom: "0.5rem",
           letterSpacing: "0.02em",
         }}
@@ -453,20 +419,20 @@ function FormField({
         style={{
           width: "100%",
           padding: "0.75rem 1rem",
-          background: "#0c1220",
-          border: "1px solid rgba(26,42,66,0.8)",
+          background: "var(--graphite)",
+          border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: 8,
-          color: "#f0f6fc",
+          color: "var(--white)",
           fontSize: "0.9rem",
-          fontFamily: "'Inter', sans-serif",
+          fontFamily: "'DM Sans', sans-serif",
           outline: "none",
         }}
         onFocus={(e) => {
           e.target.style.borderColor = "rgba(0,180,216,0.5)";
-          e.target.style.boxShadow = "0 0 0 3px rgba(0,180,216,0.08)";
+          e.target.style.boxShadow = "0 0 0 3px rgba(200,255,0,0.08)";
         }}
         onBlur={(e) => {
-          e.target.style.borderColor = "rgba(26,42,66,0.8)";
+          e.target.style.borderColor = "rgba(255,255,255,0.08)";
           e.target.style.boxShadow = "none";
         }}
       />
