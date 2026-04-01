@@ -3,6 +3,7 @@ import "./globals.css";
 import "@/app/premium.css";
 import { Header } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import ScrollReveal from "./components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "DEVMIRO — IT-Lösungen für Vorarlberg KMUs",
@@ -28,6 +29,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <ScrollReveal />
       </body>
     </html>
   );
