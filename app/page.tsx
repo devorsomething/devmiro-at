@@ -1,10 +1,15 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import CategorySwitcher from '@/components/CategorySwitcher';
+import ServicesContent from './services/page';
+import FixedPriceContent from './fixed-price/page';
+import ITCompaniesContent from './it-companies/page';
 
 export default function PremiumLanding() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<'services' | 'pricing' | 'industries'>('services');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +68,7 @@ export default function PremiumLanding() {
             <span className="text-sm font-bold tracking-widest text-[#00E5FF]">IT-LÖSUNGEN FÜR VORARLBERG</span>
           </div>
           
-          <h1 className="text-7xl md:text-[7rem] font-extrabold tracking-tighter mb-8 max-w-6xl leading-[1.05]">
+          <h1 className="text-5xl sm:text-6xl md:text-[7rem] font-extrabold tracking-tighter mb-8 max-w-6xl leading-[1.05]">
             Ihre Website.<br/>
             <span className="text-[#00E5FF] drop-shadow-[0_0_30px_rgba(0,229,255,0.4)]">Automatisiert.</span><br/>
             <span className="bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-transparent bg-clip-text drop-shadow-[0_0_30px_rgba(139,92,246,0.4)]">
