@@ -38,8 +38,6 @@
   0% { transform: rotateX(70deg) translateY(0); }
   100% { transform: rotateX(70deg) translateY(50px); }
 }
-  100% { transform: rotateX(75deg) translateY(60px); }
-}
 
 /* Conic Gradient 3D Core */
 .spatial-core {
