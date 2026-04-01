@@ -10,28 +10,34 @@
   z-index: -1;
   overflow: hidden;
   perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 /* Next-Gen 3D Floor Grid */
 .grid-3d {
   position: absolute;
-  bottom: -30%;
-  left: -50%;
-  width: 200%;
-  height: 100%;
+  bottom: -40vh;
+  left: -50vw;
+  width: 200vw;
+  height: 150vh;
   background-image: 
-    linear-gradient(to right, rgba(0, 229, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
-  background-size: 60px 60px;
-  transform: rotateX(75deg);
-  animation: grid-move 20s linear infinite;
-  mask-image: radial-gradient(circle at center top, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(circle at center top, black 20%, transparent 70%);
+    linear-gradient(to right, rgba(0, 229, 255, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.25) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform-origin: center top;
+  transform: rotateX(70deg) translateY(0);
+  animation: grid-move 10s linear infinite;
+  /* Linear mask is much more reliable on iOS/mobile Safari than radial */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
   pointer-events: none;
+  z-index: 2;
 }
 
 @keyframes grid-move {
-  0% { transform: rotateX(75deg) translateY(0); }
+  0% { transform: rotateX(70deg) translateY(0); }
+  100% { transform: rotateX(70deg) translateY(50px); }
+}
   100% { transform: rotateX(75deg) translateY(60px); }
 }
 
@@ -47,9 +53,21 @@
   background: conic-gradient(from 0deg, #00E5FF, transparent 120deg, #8B5CF6, transparent 240deg, #FF00E5);
   border-radius: 50%;
   filter: blur(120px);
-  opacity: 0.4;
+  opacity: 0.35;
   animation: rotate-core 15s linear infinite;
   mix-blend-mode: screen;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .spatial-core {
+    width: 150vw;
+    height: 150vw;
+    margin-top: -75vw;
+    margin-left: -75vw;
+    opacity: 0.25; /* Lower opacity on mobile so the grid lines remain visible */
+    filter: blur(80px);
+  }
 }
 
 @keyframes rotate-core {
