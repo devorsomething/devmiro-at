@@ -2,6 +2,10 @@ FROM node:22-alpine
 
 WORKDIR /app
 
+# Cache bust - always rebuild when this file changes
+ARG CACHE_BUST=20260401
+ENV CACHE_BUST=${CACHE_BUST}
+
 # Copy package files
 COPY package*.json ./
 
