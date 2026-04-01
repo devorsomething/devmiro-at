@@ -28,11 +28,9 @@ export default function PremiumLanding() {
   return (
     <div className="min-h-screen bg-[#050507] text-white font-sans overflow-hidden" ref={containerRef}>
       {/* Background Elements */}
-      <div className="fixed inset-0 z-0 pointer-events-none grid-bg opacity-30"></div>
       <div className="hero-bg pointer-events-none">
-        <div className="orb orb-1 orb-parallax"></div>
-        <div className="orb orb-2 orb-parallax" style={{ animationDelay: '-10s' }}></div>
-        <div className="orb orb-3 orb-parallax" style={{ width: '300px', height: '300px', background: 'rgba(139, 92, 246, 0.2)', top: '50%', left: '20%', animationDelay: '-15s' }}></div>
+        <div className="spatial-core"></div>
+        <div className="grid-3d"></div>
       </div>
 
       {/* Navigation */}
