@@ -92,6 +92,8 @@ const pricingPlans = [
   { name: 'Enterprise', price: 'Auf Anfrage', pages: 'Custom', href: '/kontakt' },
 ];
 
+import CategorySwitcher from '@/components/CategorySwitcher';
+
 export default function ServicesPage() {
   return (
     <>
@@ -101,6 +103,7 @@ export default function ServicesPage() {
         background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,180,216,0.06) 0%, transparent 70%)',
         position: 'relative', overflow: 'hidden',
       }}>
+        <CategorySwitcher />
         <div className="container-max">
           <div className="section-tag animate-fade-in-up" style={{ marginBottom: '1.5rem' }}>
             Unsere Leistungen

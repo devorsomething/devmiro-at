@@ -28,6 +28,8 @@ const comparison = [
   { criteria: 'Timeline', fixed: { text: '✅ Fix im Vertrag', highlight: true }, hourly: { text: '❌ Oft verzögert', highlight: false } },
 ];
 
+import CategorySwitcher from '@/components/CategorySwitcher';
+
 export default function FixedPricePage() {
   return (
     <>
@@ -36,6 +38,7 @@ export default function FixedPricePage() {
         paddingTop: 120, paddingBottom: 6,
         background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,180,216,0.06) 0%, transparent 70%)',
       }}>
+        <CategorySwitcher />
         <div className="container-max">
           <div className="section-tag animate-fade-in-up" style={{ marginBottom: '1.5rem' }}>
             Transparent & Fair
