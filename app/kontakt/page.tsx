@@ -1,9 +1,10 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 export default function KontaktPage() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <div className="min-h-screen bg-[#050507] text-white font-sans overflow-hidden">
       {/* Background Elements */}
@@ -23,10 +24,63 @@ export default function KontaktPage() {
             DEV<span className="text-gray-500">MIRO</span>
           </span>
         </Link>
-        <Link href="/" className="text-sm font-semibold tracking-wide text-gray-300 hover:text-white transition-colors duration-300">
+        <Link href="/" className="hidden md:block text-sm font-semibold tracking-wide text-gray-300 hover:text-white transition-colors duration-300">
           Zurück zur Startseite
         </Link>
+        {/* Mobile Hamburger Icon */}
+        <div className="md:hidden flex items-center">
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-white p-2 rounded-lg bg-white/5 border border-white/10 backdrop-blur-md"
+            aria-label="Toggle Mobile Menu"
+          >
+            {isMobileMenuOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            )}
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 z-[100] bg-[#050507]/95 backdrop-blur-2xl transition-all duration-500 flex flex-col items-center justify-center md:hidden ${
+          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="absolute top-5 right-6">
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-white p-2 rounded-lg bg-white/5 border border-white/10 backdrop-blur-md"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        
+        <div className="flex flex-col items-center gap-8 w-full px-8">
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+            <button className="text-2xl font-space-grotesk font-bold text-white hover:text-[#00E5FF] transition-colors">
+              Home
+            </button>
+          </Link>
+          <Link href="/start" onClick={() => setIsMobileMenuOpen(false)} className="w-full mt-4">
+            <button className="w-full btn-glow px-10 py-5 rounded-full bg-[#00E5FF] text-black font-extrabold text-lg flex items-center justify-center gap-3">
+              Projekt starten
+            </button>
+          </Link>
+        </div>
+      </div>
 
       <main className="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
         {/* Hero Section */}
