@@ -1,195 +1,207 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
 export function Header() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-      background: 'rgba(7, 11, 20, 0.85)',
-      backdropFilter: 'blur(20px)',
-      WebkitBackdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(26, 42, 66, 0.8)',
-    }}>
-      <nav style={{
-        maxWidth: 1200, margin: '0 auto', padding: '0 1.5rem',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        height: 64,
-      }}>
-        {/* Logo */}
-        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
-          <LogoMark />
-          <span style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: '1.25rem', fontWeight: 700,
-            color: '#f0f6fc', letterSpacing: '-0.02em',
-          }}>
-            DEV<span style={{ color: '#00b4d8' }}>MIRO</span>
-          </span>
-        </a>
+    <>
+      <header className={`navbar ${scrolled ? 'nav-scrolled' : ''}`}>
+        <div className="container-wide nav-inner">
+          {/* Logo */}
+          <Link href="/" className="nav-logo">
+            <svg width="36" height="36" viewBox="0 0 100 100">
+              <rect width="100" height="100" rx="20" fill="var(--graphite)"/>
+              <text x="50" y="68" textAnchor="middle" fontSize="50" fontWeight="bold" fill="var(--electric)">D</text>
+            </svg>
+            <span className="nav-logo-text">DEVMIRO</span>
+          </Link>
 
-        {/* Desktop Nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }} className="hidden md:flex">
-          {[
-            { href: '/', label: 'Home' },
-            { href: '/services', label: 'Services' },
-            { href: '/fixed-price', label: 'Fixed Price' },
-            { href: '/gdpr', label: 'DSGVO' },
-            { href: '/it-companies', label: 'IT-Firmen' },
-            { href: '/kontakt', label: 'Kontakt' },
-          ].map((item) => (
-            <a key={item.href} href={item.href}
-              style={{
-                padding: '0.4rem 0.85rem', borderRadius: 6,
-                fontSize: '0.875rem', fontWeight: 500,
-                color: '#8b949e', textDecoration: 'none',
-                transition: 'color 0.2s, background 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                (e.target as HTMLElement).style.color = '#f0f6fc';
-                (e.target as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
-              }}
-              onMouseLeave={(e) => {
-                (e.target as HTMLElement).style.color = '#8b949e';
-                (e.target as HTMLElement).style.background = 'transparent';
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
+          {/* Desktop Nav */}
+          <nav className="nav-links">
+            <Link href="/services" className="nav-link">Services</Link>
+            <Link href="/projects" className="nav-link">Projekte</Link>
+            <Link href="/fixed-price" className="nav-link">Fixed Price</Link>
+            <Link href="/about" className="nav-link">Über uns</Link>
+          </nav>
 
-        {/* CTA + Mobile Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <a href="/start" className="btn-primary" style={{ fontSize: '0.85rem', padding: '0.55rem 1.25rem' }}>
-            Projekt starten
-          </a>
-          <MobileMenu />
-        </div>
-      </nav>
-    </header>
-  );
-}
-
-export function Footer() {
-  const currentYear = new Date().getFullYear();
-  return (
-    <footer style={{
-      borderTop: '1px solid rgba(26, 42, 66, 0.8)',
-      background: '#070b14',
-      paddingTop: 4,
-    }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '3rem 1.5rem 2rem' }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '2.5rem',
-          marginBottom: '3rem',
-        }}>
-          {/* Brand */}
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-              <LogoMark />
-              <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: '#f0f6fc' }}>
-                DEV<span style={{ color: '#00b4d8' }}>MIRO</span>
-              </span>
-            </div>
-            <p style={{ fontSize: '0.85rem', color: '#8b949e', lineHeight: 1.6, maxWidth: 220 }}>
-              IT-Lösungen für Vorarlberg KMUs. Professionell, transparent, ohne Überraschungen.
-            </p>
+          {/* Desktop CTA */}
+          <div className="nav-actions">
+            <Link href="/kontakt" className="btn-outline nav-cta">
+              Kontakt
+            </Link>
           </div>
 
-          {/* Links */}
-          {[
-            {
-              title: 'Leistungen',
-              links: [
-                { href: '/services', label: 'Services' },
-                { href: '/fixed-price', label: 'Fixed Price' },
-                { href: '/gdpr', label: 'DSGVO-konform' },
-                { href: '/it-companies', label: 'IT-Firmen' },
-              ],
-            },
-            {
-              title: 'Unternehmen',
-              links: [
-                { href: '/kontakt', label: 'Kontakt' },
-                { href: '/start', label: 'Projekt starten' },
-              ],
-            },
-            {
-              title: 'Rechtliches',
-              links: [
-                { href: '/gdpr', label: 'Datenschutz' },
-                { href: '/kontakt', label: 'Impressum' },
-              ],
-            },
-          ].map((col) => (
-            <div key={col.title}>
-              <h4 style={{ fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#00b4d8', marginBottom: '1rem' }}>
-                {col.title}
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                {col.links.map((link) => (
-                  <li key={link.href}>
-                    <a href={link.href} style={{ fontSize: '0.875rem', color: '#8b949e', textDecoration: 'none', transition: 'color 0.2s' }}
-                      onMouseEnter={(e) => ((e.target as HTMLElement).style.color = '#f0f6fc')}
-                      onMouseLeave={(e) => ((e.target as HTMLElement).style.color = '#8b949e')}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Mobile Toggle */}
+          <button
+            className="nav-mobile-toggle"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              {menuOpen ? (
+                <>
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <line x1="3" y1="12" x2="21" y2="12"/>
+                  <line x1="3" y1="18" x2="21" y2="18"/>
+                </>
+              )}
+            </svg>
+          </button>
         </div>
 
-        {/* Bottom */}
-        <div style={{
-          borderTop: '1px solid rgba(26, 42, 66, 0.6)',
-          paddingTop: '1.5rem',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          flexWrap: 'wrap', gap: '1rem',
-        }}>
-          <p style={{ fontSize: '0.8rem', color: '#4a5568' }}>
-            © {currentYear} DEVMIRO. Alle Rechte vorbehalten. Eingetragen in Vorarlberg, Österreich.
-          </p>
-          <p style={{ fontSize: '0.8rem', color: '#4a5568' }}>
-            <span style={{ color: '#00b4d8' }}>●</span> Serverstandort: EU
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-}
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="nav-mobile-menu">
+            <Link href="/services" className="nav-mobile-link">Services</Link>
+            <Link href="/projects" className="nav-mobile-link">Projekte</Link>
+            <Link href="/fixed-price" className="nav-mobile-link">Fixed Price</Link>
+            <Link href="/about" className="nav-mobile-link">Über uns</Link>
+            <Link href="/kontakt" className="nav-mobile-link">Kontakt</Link>
+          </div>
+        )}
+      </header>
 
-function LogoMark() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="32" height="32" rx="8" fill="#0c1220"/>
-      <rect x="1" y="1" width="30" height="30" rx="7" stroke="rgba(0,180,216,0.4)" strokeWidth="1"/>
-      <path d="M9 8h6l-2 8h5L14 8h5" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-      <circle cx="24" cy="24" r="3" fill="#00b4d8" opacity="0.6"/>
-      <circle cx="24" cy="24" r="1.5" fill="#00b4d8"/>
-    </svg>
-  );
-}
+      <style>{`
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+          border-bottom: 1px solid transparent;
+        }
 
-function MobileMenu() {
-  return (
-    <button
-      className="md:hidden"
-      style={{
-        background: 'none', border: '1px solid rgba(26,42,66,0.8)',
-        borderRadius: 8, padding: '0.5rem', cursor: 'pointer',
-        color: '#8b949e', display: 'flex', alignItems: 'center',
-      }}
-      aria-label="Menu"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <line x1="3" y1="12" x2="21" y2="12"/>
-        <line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-    </button>
+        .nav-scrolled {
+          background: rgba(5, 5, 7, 0.88);
+          backdrop-filter: blur(24px) saturate(180%);
+          -webkit-backdrop-filter: blur(24px) saturate(180%);
+          border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 1.1rem 1.5rem;
+        }
+
+        .nav-logo {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          text-decoration: none;
+          flex-shrink: 0;
+        }
+
+        .nav-logo-text {
+          font-family: 'Instrument Serif', Georgia, serif;
+          font-size: 1.125rem;
+          font-weight: 400;
+          color: var(--white);
+          letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+          display: flex;
+          align-items: center;
+          gap: 2.25rem;
+        }
+
+        .nav-link {
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.75);
+          text-decoration: none;
+          transition: color 0.2s ease;
+          letter-spacing: 0.01em;
+        }
+
+        .nav-link:hover {
+          color: var(--white);
+        }
+
+        .nav-actions {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .nav-cta {
+          padding: 0.6rem 1.25rem;
+          font-size: 0.85rem;
+        }
+
+        .nav-mobile-toggle {
+          display: none;
+          background: transparent;
+          border: none;
+          color: var(--white);
+          cursor: pointer;
+          padding: 0.5rem;
+        }
+
+        .nav-mobile-menu {
+          display: none;
+          flex-direction: column;
+          background: var(--graphite);
+          border-top: 1px solid rgba(255, 255, 255, 0.06);
+          padding: 0.5rem 0;
+        }
+
+        .nav-mobile-link {
+          padding: 0.85rem 1.5rem;
+          font-size: 1rem;
+          color: var(--white);
+          text-decoration: none;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+          transition: background 0.15s ease;
+        }
+
+        .nav-mobile-link:hover {
+          background: rgba(255, 255, 255, 0.04);
+        }
+
+        @media (max-width: 900px) {
+          .nav-links {
+            gap: 1.5rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .nav-links,
+          .nav-actions {
+            display: none;
+          }
+
+          .nav-mobile-toggle {
+            display: block;
+          }
+
+          .nav-mobile-menu {
+            display: flex;
+          }
+        }
+      `}</style>
+    </>
   );
 }

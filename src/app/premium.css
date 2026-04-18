@@ -1,0 +1,149 @@
+/* Premium Animations and 3D Effects */
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, rgba(5, 5, 7, 1) 100%);
+  z-index: -1;
+  overflow: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Next-Gen 3D Floor Grid */
+.grid-3d {
+  position: absolute;
+  bottom: -40vh;
+  left: -50vw;
+  width: 200vw;
+  height: 150vh;
+  background-image: 
+    linear-gradient(to right, rgba(0, 229, 255, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.25) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform-origin: center top;
+  transform: rotateX(70deg) translateY(0);
+  animation: grid-move 10s linear infinite;
+  /* Linear mask is much more reliable on iOS/mobile Safari than radial */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes grid-move {
+  0% { transform: rotateX(70deg) translateY(0); }
+  100% { transform: rotateX(70deg) translateY(50px); }
+}
+
+/* Conic Gradient 3D Core */
+.spatial-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  margin-top: -400px;
+  margin-left: -400px;
+  background: conic-gradient(from 0deg, #00E5FF, transparent 120deg, #8B5CF6, transparent 240deg, #FF00E5);
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  animation: rotate-core 15s linear infinite;
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .spatial-core {
+    width: 150vw;
+    height: 150vw;
+    margin-top: -75vw;
+    margin-left: -75vw;
+    opacity: 0.25; /* Lower opacity on mobile so the grid lines remain visible */
+    filter: blur(80px);
+  }
+}
+
+@keyframes rotate-core {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Typography 3D Effect */
+.text-3d {
+  text-shadow: 
+    0 1px 0 #111,
+    0 2px 0 #000,
+    0 3px 10px rgba(0, 229, 255, 0.3),
+    0 5px 20px rgba(139, 92, 246, 0.2);
+  transform: translateZ(50px);
+  display: inline-block;
+}
+
+/* Keep the rest of the 3D cards and buttons intact */
+.card-3d {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-3d:hover {
+  transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+  box-shadow: 0 30px 50px rgba(0, 229, 255, 0.15), 0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+.card-3d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.nav-blur {
+  background: rgba(5, 5, 7, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-glow {
+  position: relative;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, #00E5FF, #8B5CF6, #FF00E5, #00E5FF);
+  z-index: -1;
+  border-radius: inherit;
+  background-size: 400%;
+  animation: glow 15s linear infinite;
+  opacity: 0.7; /* Increased opacity for more tactile feel */
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease;
+}
+
+.btn-glow:hover::after {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+@keyframes glow {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}

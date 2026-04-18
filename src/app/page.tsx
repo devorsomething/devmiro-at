@@ -1,685 +1,301 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+"use client";
 
-export const metadata: Metadata = {
-  title: "DEVMIRO — IT-Lösungen für Vorarlberg KMUs",
-  description: "Professionelle Webentwicklung für IT-Unternehmen, Agenturen und Dienstleister in Vorarlberg. Fixed Price, keine Überraschungen.",
-};
+import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import CategorySwitcher from '@/components/CategorySwitcher';
+import ServicesContent from './services/page';
+import FixedPriceContent from './fixed-price/page';
+import ITCompaniesContent from './it-companies/page';
 
-export default function HomePage() {
+export default function PremiumLanding() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<'services' | 'pricing' | 'industries'>('services');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const orbs = document.querySelectorAll('.orb-parallax');
+      orbs.forEach((orb: any, index) => {
+        const speed = (index + 1) * 0.15;
+        orb.style.transform = `translateY(${scrollY * speed}px)`;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <>
-      {/* Hero */}
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        paddingTop: 80, paddingBottom: 6,
-        position: 'relative', overflow: 'hidden',
-      }}>
-        {/* Background effects */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,180,216,0.07) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
-        <div style={{
-          position: 'absolute', top: '20%', right: '-5%',
-          width: 500, height: 500, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(0,180,216,0.04) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
-        <div style={{
-          position: 'absolute', bottom: '10%', left: '-10%',
-          width: 400, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(6,182,212,0.03) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
+    <div className="min-h-screen bg-[#050507] text-white font-sans overflow-hidden" ref={containerRef}>
+      {/* Background Elements */}
+      <div className="hero-bg pointer-events-none">
+        <div className="spatial-core"></div>
+        <div className="grid-3d"></div>
+      </div>
 
-        <div className="container-max" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ maxWidth: 820 }}>
-            <div className="section-tag animate-fade-in-up" style={{ marginBottom: '1.5rem' }}>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <circle cx="6" cy="6" r="3" fill="#00b4d8"/>
-                <circle cx="6" cy="6" r="5.5" stroke="#00b4d8" strokeWidth="1" opacity="0.4"/>
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 nav-blur px-6 md:px-12 py-5 flex justify-between items-center transition-all duration-300 border-b border-white/5">
+        <div className="flex items-center gap-3 cursor-pointer group">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00E5FF] to-[#8B5CF6] flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-500 shadow-[0_0_20px_rgba(0,229,255,0.4)]">
+            <span className="font-bold text-white text-xl tracking-tighter">D</span>
+          </div>
+          <span className="font-bold text-2xl tracking-tight text-white group-hover:text-[#00E5FF] transition-colors duration-500">
+            DEV<span className="text-gray-500">MIRO</span>
+          </span>
+        </div>
+        
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-10 text-sm font-semibold tracking-wide text-gray-300">
+          <button onClick={() => { setActiveTab('services'); window.scrollTo({top: 800, behavior: 'smooth'}); }} className={`hover:text-white transition-colors duration-300 ${activeTab === 'services' ? 'text-[#00E5FF]' : 'text-gray-300'}`}>Leistungen</button>
+          <button onClick={() => { setActiveTab('industries'); window.scrollTo({top: 800, behavior: 'smooth'}); }} className={`hover:text-white transition-colors duration-300 ${activeTab === 'industries' ? 'text-[#00E5FF]' : 'text-gray-300'}`}>IT-Firmen</button>
+          <button onClick={() => { setActiveTab('pricing'); window.scrollTo({top: 800, behavior: 'smooth'}); }} className={`hover:text-white transition-colors duration-300 ${activeTab === 'pricing' ? 'text-[#00E5FF]' : 'text-gray-300'}`}>Fixpreis</button>
+          <Link href="/start">
+            <button className="px-7 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00E5FF]/50 hover:shadow-[0_0_20px_rgba(0,229,255,0.3)] transition-all duration-300 font-bold backdrop-blur-md">
+              Projekt starten
+            </button>
+          </Link>
+        </div>
+
+        {/* Mobile Hamburger Icon */}
+        <div className="md:hidden flex items-center">
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-white p-2 rounded-lg bg-white/5 border border-white/10 backdrop-blur-md"
+            aria-label="Toggle Mobile Menu"
+          >
+            {isMobileMenuOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
-              IT-Lösungen für Vorarlberg KMUs
-            </div>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            )}
+          </button>
+        </div>
+      </nav>
 
-            <h1 className="animate-fade-in-up delay-100" style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-              fontWeight: 800, lineHeight: 1.1,
-              color: '#f0f6fc', marginBottom: '1.5rem',
-              letterSpacing: '-0.03em',
-            }}>
-              Webentwicklung ohne{" "}
-              <span className="gradient-text">Templates.</span>
-              <br />
-              Ohne Überraschungen.
-            </h1>
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 z-[100] bg-[#050507]/95 backdrop-blur-2xl transition-all duration-500 flex flex-col items-center justify-center md:hidden ${
+          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="absolute top-5 right-6">
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-white p-2 rounded-lg bg-white/5 border border-white/10 backdrop-blur-md"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        
+        <div className="flex flex-col items-center gap-8 w-full px-8">
+          <button 
+            onClick={() => { setActiveTab('services'); setIsMobileMenuOpen(false); window.scrollTo({top: 800, behavior: 'smooth'}); }}
+            className={`text-2xl font-space-grotesk font-bold transition-colors ${activeTab === 'services' ? 'text-[#00E5FF]' : 'text-white'}`}
+          >
+            Leistungen
+          </button>
+          <button 
+            onClick={() => { setActiveTab('industries'); setIsMobileMenuOpen(false); window.scrollTo({top: 800, behavior: 'smooth'}); }}
+            className={`text-2xl font-space-grotesk font-bold transition-colors ${activeTab === 'industries' ? 'text-[#00E5FF]' : 'text-white'}`}
+          >
+            IT-Firmen
+          </button>
+          <button 
+            onClick={() => { setActiveTab('pricing'); setIsMobileMenuOpen(false); window.scrollTo({top: 800, behavior: 'smooth'}); }}
+            className={`text-2xl font-space-grotesk font-bold transition-colors ${activeTab === 'pricing' ? 'text-[#00E5FF]' : 'text-white'}`}
+          >
+            Fixpreis
+          </button>
+          <Link href="/kontakt" onClick={() => setIsMobileMenuOpen(false)}>
+            <button className="text-2xl font-space-grotesk font-bold text-white hover:text-[#00E5FF] transition-colors">
+              Kontakt
+            </button>
+          </Link>
+          <Link href="/start" onClick={() => setIsMobileMenuOpen(false)} className="w-full mt-4">
+            <button className="w-full btn-glow px-10 py-5 rounded-full bg-[#00E5FF] text-black font-extrabold text-lg flex items-center justify-center gap-3">
+              Projekt starten
+            </button>
+          </Link>
+        </div>
+      </div>
 
-            <p className="animate-fade-in-up delay-200" style={{
-              fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
-              color: '#8b949e', lineHeight: 1.7, marginBottom: '2.5rem',
-              maxWidth: 620,
-            }}>
-              Wir designen und entwickeln Ihre Website von Grund auf. Fixpreis, kein Stundenzettel, keine versteckten Kosten. Sie wissen exakt, was Sie zahlen — bevor wir starten.
-            </p>
-
-            <div className="animate-fade-in-up delay-300" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link href="/start" className="btn-primary" style={{ fontSize: '1rem', padding: '0.9rem 2rem' }}>
+      {/* Main Content */}
+      <main className="relative z-10">
+        
+        {/* Hero Section */}
+        <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 pt-20">
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass-panel mb-10 animate-[fade-in_1s_ease-out] border border-[#00E5FF]/20 shadow-[0_0_15px_rgba(0,229,255,0.15)]">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#00E5FF] animate-pulse"></span>
+            <span className="text-sm font-bold tracking-widest text-[#00E5FF]">IT-LÖSUNGEN FÜR VORARLBERG</span>
+          </div>
+          
+          <h1 className="text-5xl sm:text-6xl md:text-[7rem] font-extrabold tracking-tighter mb-8 max-w-6xl leading-[1.05]">
+            Ihre Website.<br/>
+            <span className="text-[#00E5FF] drop-shadow-[0_0_30px_rgba(0,229,255,0.4)]">Automatisiert.</span><br/>
+            <span className="bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-transparent bg-clip-text drop-shadow-[0_0_30px_rgba(139,92,246,0.4)]">
+              Umsatzsteigernd.
+            </span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mb-14 font-medium leading-relaxed">
+            DevMiro baut digitale Lösungen für Bregenzer und Vorarlberger Unternehmen — 
+            von professionellen Websites bis hin zu KI-gestützter Kundenkommunikation. 
+            Schnell, ehrlich, local.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto px-6">
+            <Link href="/start" className="w-full sm:w-auto">
+              <button className="w-full btn-glow px-10 py-5 rounded-full bg-[#00E5FF] text-black font-extrabold text-lg hover:bg-white hover:shadow-[0_0_40px_rgba(0,229,255,0.6)] transition-all duration-500 transform hover:-translate-y-1 flex items-center justify-center gap-3">
                 Projekt starten
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </Link>
-              <Link href="/services" className="btn-outline" style={{ fontSize: '1rem', padding: '0.9rem 2rem' }}>
-                Mehr erfahren
-              </Link>
-            </div>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+              </button>
+            </Link>
+            <button onClick={() => { setActiveTab('services'); window.scrollTo({top: 800, behavior: 'smooth'}); }} className="w-full sm:w-auto px-10 py-5 rounded-full glass-panel hover:bg-white/10 text-white font-bold text-lg border border-white/20 hover:border-white/50 transition-all duration-500 flex items-center justify-center gap-3 group">
+                Leistungen ansehen
+                <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+              </button>
+          </div>
 
-            <div className="animate-fade-in-up delay-400" style={{
-              display: 'flex', alignItems: 'center', gap: '1rem',
-              marginTop: '3rem', paddingTop: '2rem',
-              borderTop: '1px solid rgba(26,42,66,0.6)',
-            }}>
-              <TrustedBadges />
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-60 hover:opacity-100 transition-opacity cursor-pointer animate-bounce">
+            <div className="w-7 h-12 border-2 border-white/30 rounded-full flex justify-center p-1.5">
+              <div className="w-1.5 h-3 bg-[#00E5FF] rounded-full animate-[pulse_1.5s_ease-in-out_infinite]"></div>
             </div>
+            <span className="text-[10px] font-bold tracking-[0.3em] text-white/50">SCROLLEN</span>
+          </div>
+        </section>
+
+        
+        {/* Sticky Category Switcher */}
+        <div className="sticky top-20 z-40 w-full px-4 flex justify-center mb-12 pt-6">
+          <div className="glass-panel bg-[#050507]/80 backdrop-blur-xl rounded-full p-2 flex gap-2 overflow-x-auto hide-scrollbar max-w-full shadow-[0_10px_40px_rgba(0,0,0,0.8)] border border-white/10">
+            <button onClick={() => setActiveTab('services')} className={`px-6 py-3 rounded-full text-sm sm:text-base font-bold whitespace-nowrap transition-all duration-300 ${activeTab === 'services' ? 'bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow-[0_0_20px_rgba(0,229,255,0.4)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
+              IT-Leistungen
+            </button>
+            <button onClick={() => setActiveTab('industries')} className={`px-6 py-3 rounded-full text-sm sm:text-base font-bold whitespace-nowrap transition-all duration-300 ${activeTab === 'industries' ? 'bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow-[0_0_20px_rgba(0,229,255,0.4)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
+              Für IT-Firmen
+            </button>
+            <button onClick={() => setActiveTab('pricing')} className={`px-6 py-3 rounded-full text-sm sm:text-base font-bold whitespace-nowrap transition-all duration-300 ${activeTab === 'pricing' ? 'bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow-[0_0_20px_rgba(0,229,255,0.4)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
+              Fixpreis-Modell
+            </button>
           </div>
         </div>
-      </section>
 
-      {/* Pain Points */}
-      <PainPoints />
-
-      {/* Pricing Overview */}
-      <PricingOverview />
-
-      {/* How It Works */}
-      <HowItWorks />
-
-      {/* Industries */}
-      <Industries />
-
-      {/* Satisfaction Guarantee */}
-      <SatisfactionGuarantee />
-
-      {/* FAQ */}
-      <FAQ />
-
-      {/* CTA */}
-      <CTASection />
-    </>
-  );
-}
-
-function TrustedBadges() {
-  const badges = [
-    { label: 'WordPress', icon: '⚡' },
-    { label: 'GDPR-konform', icon: '🛡️' },
-    { label: 'EU-Hosting', icon: '🌍' },
-    { label: 'Fixpreis', icon: '✓' },
-  ];
-  return (
-    <>
-      {badges.map((b, i) => (
-        <div key={i} style={{
-          display: 'flex', alignItems: 'center', gap: '0.4rem',
-          fontSize: '0.8rem', color: '#8b949e',
-        }}>
-          <span>{b.icon}</span>
-          <span>{b.label}</span>
-          {i < badges.length - 1 && (
-            <span style={{ width: 1, height: 12, background: 'rgba(26,42,66,0.8)', marginLeft: '0.5rem' }} />
+        {/* Dynamic Tab Content */}
+        <div className="w-full relative z-10 min-h-[50vh]">
+          {activeTab === 'services' && (
+            <div key="services" className="animate-[fade-in_0.5s_ease-out]">
+              <ServicesContent />
+            </div>
+          )}
+          {activeTab === 'industries' && (
+            <div key="industries" className="animate-[fade-in_0.5s_ease-out]">
+              <ITCompaniesContent />
+            </div>
+          )}
+          {activeTab === 'pricing' && (
+            <div key="pricing" className="animate-[fade-in_0.5s_ease-out]">
+              <FixedPriceContent />
+            </div>
           )}
         </div>
-      ))}
-    </>
-  );
-}
 
-function PainPoints() {
-  const problems = [
-    {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="5" y="2" width="14" height="20" rx="2"/>
-          <line x1="12" y1="18" x2="12" y2="18.01" strokeWidth="2.5"/>
-        </svg>
-      ),
-      title: 'Nicht mobilfähig',
-      desc: 'Mehr als die Hälfte Ihrer Besucher ist auf dem Handy. Wenn die Seite dort nicht funktioniert, sind sie weg.',
-    },
-    {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <polyline points="12,6 12,12 16,14"/>
-        </svg>
-      ),
-      title: 'Zu langsam zum Ranken',
-      desc: 'Eine langsame Seite wird von Google bury. Ihre Konkurrenz erscheint zuerst — selbst wenn Ihr Service besser ist.',
-    },
-    {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="16,18 22,12 16,6"/>
-          <polyline points="8,6 2,12 8,18"/>
-        </svg>
-      ),
-      title: 'Sieht aus wie 2015',
-      desc: 'Menschen urteilen über Ihr Unternehmen anhand Ihrer Website. Wenn sie veraltet aussieht, nehmen sie an, dass Ihre Arbeit es auch ist.',
-    },
-    {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="12" y1="1" x2="12" y2="23"/>
-          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-        </svg>
-      ),
-      title: 'Keine Conversions',
-      desc: 'Traffic ohne Conversions ist verschwendetes Geld. Kein klarer Call-to-Action, kein Kontaktformular über dem Fold, kein Grund zu kontaktieren.',
-    },
-  ];
+        {/* Core Values Section */}
 
-  return (
-    <section style={{ padding: '6rem 0', background: '#070b14' }}>
-      <div className="container-max">
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <div className="section-tag" style={{ marginBottom: '1rem' }}>Das Problem</div>
-          <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-            fontWeight: 700, color: '#f0f6fc', marginBottom: '1rem',
-            letterSpacing: '-0.02em',
-          }}>
-            Das kennen Sie vielleicht
-          </h2>
-        </div>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: '1.25rem',
-        }}>
-          {problems.map((p, i) => (
-            <div key={i} className="card" style={{ padding: '1.75rem' }}>
-              <div style={{
-                width: 48, height: 48, borderRadius: 10,
-                background: 'rgba(0,180,216,0.08)',
-                border: '1px solid rgba(0,180,216,0.15)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                marginBottom: '1.25rem',
-              }}>
-                {p.icon}
-              </div>
-              <h3 style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '1.05rem', fontWeight: 600, color: '#f0f6fc',
-                marginBottom: '0.6rem',
-              }}>
-                {p.title}
-              </h3>
-              <p style={{ fontSize: '0.9rem', color: '#8b949e', lineHeight: 1.65 }}>
-                {p.desc}
-              </p>
+        <section id="values" className="py-40 px-6 max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-bold tracking-widest text-gray-400 mb-6">
+              WARUM DEVMIRO
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PricingOverview() {
-  const plans = [
-    {
-      name: 'Business',
-      price: '€ 6.500',
-      pages: 'bis 10 Seiten',
-      badge: 'Beliebt',
-      badgeColor: '#00b4d8',
-      features: [
-        'Custom Figma Design',
-        'Mobile + Tablet optimiert',
-        'WordPress CMS',
-        'Kontaktformular + Google Maps',
-        'SEO Setup (10 Keywords)',
-        'DSGVO-konform',
-        'Unbegrenzte Design-Revisionen',
-        'Blog/News-Bereich',
-        'Google Analytics 4',
-        '30-min Training',
-        '30 Tage Support',
-        '1 Monat kostenloses Hosting',
-      ],
-      cta: 'Projekt starten',
-      href: '/start',
-    },
-    {
-      name: 'Premium',
-      price: '€ 12.000',
-      pages: '10–20+ Seiten',
-      badge: null,
-      badgeColor: null,
-      features: [
-        'Alles in Business',
-        '2 Design-Richtungen',
-        'Brand Kit',
-        'Animationen / Transitions',
-        'Mehrsprachig (2 Sprachen)',
-        'Newsletter / CRM Integration',
-        'Detaillierter Sitemap + Content Brief',
-        '60 Tage Support',
-        'Quartals-Check-in',
-      ],
-      cta: 'Projekt starten',
-      href: '/start',
-      highlight: true,
-    },
-    {
-      name: 'Enterprise',
-      price: 'Auf Anfrage',
-      pages: 'Großprojekte',
-      badge: null,
-      badgeColor: null,
-      features: [
-        'Alles in Premium',
-        'E-Commerce / WooCommerce',
-        'Custom Funktionalität',
-        'Multi-Site / Multi-Brand',
-        'Content-Migration',
-        'Prioritäts-Support',
-        'Quartals-Performance-Reviews',
-      ],
-      cta: 'Kontakt aufnehmen',
-      href: '/kontakt',
-    },
-  ];
-
-  return (
-    <section style={{
-      padding: '6rem 0',
-      background: 'linear-gradient(180deg, #070b14 0%, #0c1220 100%)',
-    }}>
-      <div className="container-max">
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <div className="section-tag" style={{ marginBottom: '1rem' }}>Transparent Preise</div>
-          <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-            fontWeight: 700, color: '#f0f6fc', marginBottom: '1rem',
-            letterSpacing: '-0.02em',
-          }}>
-            Fixpreis. Kein Stundenzettel.
-          </h2>
-          <p style={{ fontSize: '1rem', color: '#8b949e', maxWidth: 560, margin: '0 auto' }}>
-            Sie wissen exakt, was Ihre Website kostet, bevor wir starten. Keine Überraschungen am Ende.
-          </p>
-        </div>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '1.5rem',
-          alignItems: 'start',
-        }}>
-          {plans.map((plan, i) => (
-            <div
-              key={i}
-              className="card glow-border"
-              style={{
-                padding: '2rem',
-                position: 'relative',
-                background: plan.highlight ? 'rgba(0,180,216,0.04)' : 'var(--bg-card)',
-                borderColor: plan.highlight ? 'rgba(0,180,216,0.35)' : undefined,
-              }}
-            >
-              {plan.badge && (
-                <div style={{
-                  position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)',
-                  background: plan.badgeColor, color: '#070b14',
-                  fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.08em',
-                  padding: '0.25rem 0.85rem', borderRadius: 100,
-                }}>
-                  {plan.badge}
-                </div>
-              )}
-
-              <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: '1.1rem', fontWeight: 600, color: '#f0f6fc', marginBottom: '0.5rem',
-                }}>
-                  {plan.name}
-                </h3>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
-                  <span style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '2rem', fontWeight: 800,
-                    color: plan.highlight ? '#00b4d8' : '#f0f6fc',
-                  }}>
-                    {plan.price}
-                  </span>
-                  <span style={{ fontSize: '0.8rem', color: '#8b949e' }}>exkl. USt.</span>
-                </div>
-                <p style={{ fontSize: '0.85rem', color: '#4a5568', marginTop: '0.25rem' }}>{plan.pages}</p>
+            <h2 className="text-5xl md:text-6xl font-extrabold mb-6">Keine Templates. <span className="text-[#00E5FF]">Kein Bullshit.</span></h2>
+            <p className="text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">Wir programmieren von Hand. Jede Website ist auf maximale Performance und Conversion für Ihren Use-Case optimiert.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Feature 1 */}
+            <div className="card-3d glass-panel p-10 relative overflow-hidden group rounded-3xl border border-white/5 hover:border-[#00E5FF]/30">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00E5FF] to-blue-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+              <div className="w-16 h-16 rounded-2xl bg-[#00E5FF]/10 flex items-center justify-center mb-8 text-[#00E5FF] group-hover:scale-110 transition-transform duration-500">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
               </div>
-
-              <div style={{
-                height: 1, background: 'rgba(26,42,66,0.6)',
-                margin: '0 0 1.5rem',
-              }} />
-
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                {plan.features.map((f, j) => (
-                  <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontSize: '0.875rem', color: '#8b949e' }}>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: 2 }}>
-                      <path d="M3 8l3.5 3.5L13 4.5" stroke={plan.highlight ? '#00b4d8' : '#10b981'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              <Link href={plan.href} className={plan.highlight ? 'btn-primary' : 'btn-outline'} style={{ width: '100%', justifyContent: 'center' }}>
-                {plan.cta}
-              </Link>
+              <h3 className="text-3xl font-bold mb-4 text-white">Hyper Performance</h3>
+              <p className="text-gray-400 text-lg leading-relaxed">Next.js Edge-Infrastruktur bedeutet Ladezeiten unter 1 Sekunde. Google liebt schnelle Seiten — Ihre Kunden auch.</p>
             </div>
-          ))}
-        </div>
-
-        <div style={{
-          textAlign: 'center', marginTop: '2rem',
-          fontSize: '0.85rem', color: '#4a5568',
-        }}>
-          Hosting + Wartung: <span style={{ color: '#8b949e' }}>€ 99/Monat</span> — 1. Monat gratis ·{' '}
-          <Link href="/fixed-price" style={{ color: '#00b4d8', textDecoration: 'none' }}>Alle Details ansehen →</Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function HowItWorks() {
-  const steps = [
-    {
-      num: '01',
-      title: 'Projektformular ausfüllen',
-      desc: 'Beschreiben Sie Ihre Anforderungen in unserem Formular — Branch, Seitenanzahl, gewünschte Features.',
-    },
-    {
-      num: '02',
-      title: 'Angebot erhalten',
-      desc: 'Innerhalb von 24 Stunden erhalten Sie einen Vertrag mit Festpreis, Scope und Lieferdatum.',
-    },
-    {
-      num: '03',
-      title: 'Design-Phase',
-      desc: '50% Anzahlung → wir starten mit Figma Mockups. Unbegrenzte Revisionen, bis Sie zufrieden sind.',
-    },
-    {
-      num: '04',
-      title: 'Entwicklung & Launch',
-      desc: 'Restliche 50% bei Fertigstellung. Training-Session inklusive. Ihre Seite ist in wenigen Wochen live.',
-    },
-  ];
-
-  return (
-    <section style={{ padding: '6rem 0', background: '#070b14' }}>
-      <div className="container-max">
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <div className="section-tag" style={{ marginBottom: '1rem' }}>Unser Prozess</div>
-          <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-            fontWeight: 700, color: '#f0f6fc', marginBottom: '1rem',
-            letterSpacing: '-0.02em',
-          }}>
-            In 4 Schritten zur neuen Website
-          </h2>
-        </div>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '0',
-          position: 'relative',
-        }}>
-          {/* Connection line (desktop) */}
-          <div style={{
-            position: 'absolute', top: 28, left: '12.5%', right: '12.5%', height: 1,
-            background: 'linear-gradient(90deg, transparent, rgba(0,180,216,0.2), transparent)',
-            display: 'none',
-          }} className="md:block" />
-
-          {steps.map((step, i) => (
-            <div key={i} style={{ padding: '0 1.25rem', textAlign: 'center' }}>
-              <div style={{
-                width: 56, height: 56, borderRadius: '50%',
-                background: 'rgba(0,180,216,0.08)',
-                border: '1px solid rgba(0,180,216,0.25)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                margin: '0 auto 1.25rem',
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '0.8rem', fontWeight: 700,
-                color: '#00b4d8', letterSpacing: '0.05em',
-              }}>
-                {step.num}
+            
+            {/* Feature 2 */}
+            <div className="card-3d glass-panel p-10 relative overflow-hidden group rounded-3xl border border-white/5 hover:border-[#8B5CF6]/30 mt-0 md:mt-16">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8B5CF6] to-pink-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+              <div className="w-16 h-16 rounded-2xl bg-[#8B5CF6]/10 flex items-center justify-center mb-8 text-[#8B5CF6] group-hover:scale-110 transition-transform duration-500">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
               </div>
-              <h3 style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '1rem', fontWeight: 600, color: '#f0f6fc',
-                marginBottom: '0.6rem',
-              }}>
-                {step.title}
-              </h3>
-              <p style={{ fontSize: '0.875rem', color: '#8b949e', lineHeight: 1.65 }}>
-                {step.desc}
-              </p>
+              <h3 className="text-3xl font-bold mb-4 text-white">DSGVO & Security</h3>
+              <p className="text-gray-400 text-lg leading-relaxed">100% DSGVO-konform. Hosting in Europa, sichere Datenverarbeitung und Cookie-Consent-Management inklusive.</p>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Industries() {
-  const industries = [
-    { href: '/it-companies', title: 'IT-Firmen & MSPs', desc: 'Modernes Design, das Ihre technische Kompetenz widerspiegelt.' },
-    { href: '/services', title: 'Agenturen', desc: 'Boutique-Positionierung, die sich von der Masse abhebt.' },
-    { href: '/fixed-price', title: 'Dienstleister', desc: 'Klare Leistungsseiten und starke Conversion-Optimierung.' },
-  ];
-
-  return (
-    <section style={{
-      padding: '6rem 0',
-      background: 'linear-gradient(180deg, #0c1220 0%, #070b14 100%)',
-    }}>
-      <div className="container-max">
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <div className="section-tag" style={{ marginBottom: '1rem' }}>Branchenspezialisiert</div>
-          <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-            fontWeight: 700, color: '#f0f6fc', marginBottom: '1rem',
-            letterSpacing: '-0.02em',
-          }}>
-            Fokus auf B2B-Unternehmen
-          </h2>
-          <p style={{ fontSize: '1rem', color: '#8b949e', maxWidth: 540, margin: '0 auto' }}>
-            Wir spezialisieren uns auf Websites für serviceorientierte B2B-Unternehmen in Europa.
-          </p>
-        </div>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '1.25rem',
-        }}>
-          {industries.map((ind, i) => (
-            <Link key={i} href={ind.href} className="card" style={{
-              padding: '1.75rem', textDecoration: 'none',
-              display: 'block',
-            }}>
-              <div style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '1.1rem', fontWeight: 600, color: '#f0f6fc',
-                marginBottom: '0.5rem',
-              }}>
-                {ind.title}
+            
+            {/* Feature 3 */}
+            <div className="card-3d glass-panel p-10 relative overflow-hidden group rounded-3xl border border-white/5 hover:border-[#00E5FF]/30 mt-0 md:mt-32">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00E5FF]/10 to-[#8B5CF6]/10 flex items-center justify-center mb-8 text-white group-hover:scale-110 transition-transform duration-500">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               </div>
-              <p style={{ fontSize: '0.875rem', color: '#8b949e', lineHeight: 1.6, margin: 0 }}>
-                {ind.desc}
-              </p>
-              <div style={{ marginTop: '1rem', color: '#00b4d8', fontSize: '0.85rem', fontWeight: 500 }}>
-                Mehr erfahren →
-              </div>
+              <h3 className="text-3xl font-bold mb-4 text-white">Fixpreis Garantie</h3>
+              <p className="text-gray-400 text-lg leading-relaxed">Wir hassen Stundenzettel genau so wie Sie. Sie wissen vor Projektstart auf den Cent genau, was es kostet.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-40 relative mt-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00E5FF]/5 to-[#050507] pointer-events-none"></div>
+          <div className="max-w-5xl mx-auto px-6 text-center relative z-10 glass-panel p-20 rounded-[3rem] border border-[#00E5FF]/20 shadow-[0_0_100px_rgba(0,229,255,0.05)] overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#00E5FF]/20 rounded-full blur-[100px]"></div>
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#8B5CF6]/20 rounded-full blur-[100px]"></div>
+            
+            <h2 className="text-5xl md:text-6xl font-extrabold mb-8 relative z-10">Bereit für den <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6]">nächsten Schritt?</span></h2>
+            <p className="text-2xl text-gray-300 mb-12 max-w-3xl mx-auto relative z-10">
+              Buchen Sie ein kostenloses Erstgespräch. Wir analysieren Ihre aktuelle Situation und zeigen Ihnen ungenutztes Potenzial.
+            </p>
+            <Link href="/kontakt" className="relative z-10 inline-block">
+              <button className="btn-glow px-14 py-6 rounded-full bg-white text-black font-extrabold text-xl hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(255,255,255,0.2)] flex items-center gap-3">
+                Erstgespräch vereinbaren
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+              </button>
             </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function SatisfactionGuarantee() {
-  return (
-    <section style={{ padding: '5rem 0', background: '#070b14' }}>
-      <div className="container-max">
-        <div style={{
-          border: '1px solid rgba(0,180,216,0.2)',
-          borderRadius: 16,
-          padding: '3rem 2.5rem',
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(0,180,216,0.04) 0%, rgba(0,180,216,0.01) 100%)',
-          position: 'relative', overflow: 'hidden',
-        }}>
-          <div style={{
-            position: 'absolute', top: -50, right: -50,
-            width: 200, height: 200, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(0,180,216,0.06) 0%, transparent 70%)',
-          }} />
-          <div className="section-tag" style={{ marginBottom: '1.5rem' }}>Design-Zufriedenheitsgarantie</div>
-          <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
-            fontWeight: 700, color: '#f0f6fc', marginBottom: '1rem',
-            letterSpacing: '-0.02em',
-          }}>
-            Design, das Ihnen gefällt — oder wir überarbeiten es kostenlos
-          </h2>
-          <p style={{ fontSize: '1rem', color: '#8b949e', maxWidth: 620, margin: '0 auto 2rem', lineHeight: 1.7 }}>
-            Wenn Sie mit dem Design nicht 100% zufrieden sind, überarbeiten wir es so lange, bis es passt. Keine zusätzlichen Kosten. Keine unangenehmen Gespräche. Sie bezahlen die zweite Hälfte erst, wenn Sie zufrieden sind.
-          </p>
-          <Link href="/start" className="btn-primary" style={{ fontSize: '1rem', padding: '0.9rem 2rem' }}>
-            Projekt starten
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FAQ() {
-  const faqs = [
-    {
-      q: 'Wie lange dauert ein typisches Projekt?',
-      a: 'Business-Pakete sind typischerweise in 2–4 Wochen fertig. Premium-Pakete dauern je nach Umfang 4–8 Wochen.',
-    },
-    {
-      q: 'Kann ich mein Hosting woanders haben?',
-      a: 'Ja, wir können Ihre Website auch auf Ihrem eigenen Server oder Hosting-Paket deployen. 1 Monat kostenloses Hosting ist aber inklusive.',
-    },
-    {
-      q: 'Was ist im Wartungsvertrag enthalten?',
-      a: 'Software-Updates, Security Patches, tägliche Backups, Uptime-Monitoring und EU-Hosting — alles inklusive.',
-    },
-    {
-      q: 'Wie unterscheiden Sie sich von anderen Agenturen?',
-      a: 'Fixpreis statt Stundenzettel. Custom Design statt Templates. Transparente Prozesse. Und eine Garantie, die Sie absichert.',
-    },
-  ];
-
-  return (
-    <section style={{ padding: '6rem 0', background: 'linear-gradient(180deg, #070b14 0%, #0c1220 100%)' }}>
-      <div className="container-max" style={{ maxWidth: 800 }}>
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <div className="section-tag" style={{ marginBottom: '1rem' }}>Häufige Fragen</div>
-          <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-            fontWeight: 700, color: '#f0f6fc', marginBottom: '1rem',
-            letterSpacing: '-0.02em',
-          }}>
-            Noch Fragen?
-          </h2>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {faqs.map((faq, i) => (
-            <details key={i} className="card" style={{ padding: '1.5rem', cursor: 'pointer' }}>
-              <summary style={{
-                listStyle: 'none', fontWeight: 600, color: '#f0f6fc',
-                fontSize: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                cursor: 'pointer',
-              }}>
-                {faq.q}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="2" strokeLinecap="round" className="faq-chevron" style={{ flexShrink: 0, marginLeft: '1rem', transition: 'transform 0.2s' }}>
-                  <polyline points="6,9 12,15 18,9"/>
-                </svg>
-              </summary>
-              <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#8b949e', lineHeight: 1.7 }}>
-                {faq.a}
-              </p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CTASection() {
-  return (
-    <section style={{
-      padding: '8rem 0 6rem',
-      background: '#070b14',
-      position: 'relative', overflow: 'hidden',
-    }}>
-      <div style={{
-        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-        width: 800, height: 400, borderRadius: '50%',
-        background: 'radial-gradient(ellipse, rgba(0,180,216,0.06) 0%, transparent 70%)',
-        pointerEvents: 'none',
-      }} />
-      <div className="container-max" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
-        <div className="section-tag" style={{ marginBottom: '1.5rem' }}>Jetzt starten</div>
-        <h2 style={{
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontSize: 'clamp(2rem, 4vw, 3rem)',
-          fontWeight: 800, color: '#f0f6fc', marginBottom: '1.5rem',
-          letterSpacing: '-0.03em',
-        }}>
-          Bereit für eine Website,{" "}
-          <span className="gradient-text">die funktioniert?</span>
-        </h2>
-        <p style={{ fontSize: '1.1rem', color: '#8b949e', maxWidth: 520, margin: '0 auto 2.5rem', lineHeight: 1.7 }}>
-          Formular ausfüllen, Vertrag innerhalb von 24 Stunden — Ihre neue Website ist in wenigen Wochen live.
-        </p>
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/start" className="btn-primary" style={{ fontSize: '1rem', padding: '0.9rem 2rem' }}>
-            Projekt starten
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </Link>
-          <Link href="/kontakt" className="btn-outline" style={{ fontSize: '1rem', padding: '0.9rem 2rem' }}>
-            Kontakt
-          </Link>
-        </div>
-      </div>
-    </section>
+          </div>
+        </section>
+        
+        {/* Footer */}
+        <footer className="border-t border-white/5 pt-20 pb-10 px-8">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00E5FF] to-[#8B5CF6] flex items-center justify-center">
+                <span className="font-bold text-white text-sm">D</span>
+              </div>
+              <span className="font-bold text-xl text-white">DEV<span className="text-gray-500">MIRO</span></span>
+            </div>
+            
+            <div className="flex gap-8 text-sm font-semibold text-gray-400">
+              <Link href="/impressum" className="hover:text-[#00E5FF] transition-colors">Impressum</Link>
+              <Link href="/datenschutz" className="hover:text-[#00E5FF] transition-colors">Datenschutz</Link>
+              <Link href="/kontakt" className="hover:text-[#00E5FF] transition-colors">Kontakt</Link>
+            </div>
+          </div>
+          <div className="max-w-7xl mx-auto mt-10 text-center md:text-left text-gray-600 text-xs font-semibold tracking-widest">
+            © 2026 DEVMIRO IT-LÖSUNGEN. ALLE RECHTE VORBEHALTEN.
+          </div>
+        </footer>
+      </main>
+    </div>
   );
 }
