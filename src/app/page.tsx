@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import CategorySwitcher from '@/components/CategorySwitcher';
-import ServicesContent from './services/page';
-import FixedPriceContent from './fixed-price/page';
-import ITCompaniesContent from './it-companies/page';
+import ServicesPage from './services/page';
+import FixedPricePage from './fixed-price/page';
+import ITCompaniesPage from './it-companies/page';
 
 export default function PremiumLanding() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -196,17 +196,17 @@ export default function PremiumLanding() {
         <div className="w-full relative z-10 min-h-[50vh]">
           {activeTab === 'services' && (
             <div key="services" className="animate-[fade-in_0.5s_ease-out]">
-              <ServicesContent />
+              <ServicesPage />
             </div>
           )}
           {activeTab === 'industries' && (
             <div key="industries" className="animate-[fade-in_0.5s_ease-out]">
-              <ITCompaniesContent />
+              <ITCompaniesPage />
             </div>
           )}
           {activeTab === 'pricing' && (
             <div key="pricing" className="animate-[fade-in_0.5s_ease-out]">
-              <FixedPriceContent />
+              <FixedPricePage />
             </div>
           )}
         </div>
